@@ -143,6 +143,8 @@ class Image(Base):
     complaint = relationship("Complaint" , uselist=False , back_populates="image")
 # ------------------------------------------------------------------
 
+
+# ----------------------------TOKEN MODEL-------------------------
 class Token(Base):
     __tablename__ = "tokens"
 
@@ -152,3 +154,14 @@ class Token(Base):
     __table_args__ = (
         PrimaryKeyConstraint("studentId" , "token"),
     )
+# ------------------------------------------------------------------
+
+
+# ----------------------------OTP MODEL-------------------------
+class OTP(Base):
+    __tablename__ = "otps"
+
+    studentEmail = Column(String , ForeignKey("students.email" , ondelete="CASCADE") , primary_key=True)
+    otp = Column(String , nullable=False)
+    created = Column(DateTime , default=datetime.now)
+# ------------------------------------------------------------------

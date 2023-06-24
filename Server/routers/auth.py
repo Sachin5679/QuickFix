@@ -123,33 +123,6 @@ def login(data:OAuth2PasswordRequestForm = Depends() , db:Session = Depends(getd
 
 
 
-# ----------------------------CHANGE PASSWORD-------------------------
-@authRouter.patch("/password" , status_code=status.HTTP_204_NO_CONTENT)
-def changePassword(data:schemas.changePassword , db:Session = Depends(getdb)):
-
-    if data.type == "student":
-        student = db.query(models.Student).filter(models.Student.email == data.email).first()
-        if student == None:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Student not found")
-
-        if not utils.verifyPassword(data.oldPassword , student.password):
-            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY , detail="Invalid Credentials")
-        
-        student.password = utils.hashPassword(data.newPassword)
-        allTokens = db.query(models.Token).filter(models.Token.studentId == student.id).all()
-        for i in allTokens:
-            db.delete(i)
-
-        db.commit()
-# ------------------------------------------------------------------
-
-
-
-
-
-
-
-
 
 
 

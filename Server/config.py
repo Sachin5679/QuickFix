@@ -15,6 +15,8 @@ class Settings(BaseSettings):
     CLOUD_NAME : str
     API_KEY : str
     API_SECRET : str
+    OTP_EXPIRE_MINUTES : int
+    CHANGE_PASSWORD_TOKEN_EXPIRE_MINUTES : int
     
     class Config:
         env_file = ".env"

@@ -13,7 +13,20 @@ class changePassword(BaseModel):
     oldPassword : str
     newPassword : str
     type : constr(regex=r'^(student|admin)$')
+
+class emailForOtp(BaseModel):
+    email : constr(regex=r'^.+@iiitm\.ac\.in$')
+
+class verifyOtp(BaseModel):
+    email : constr(regex=r'^.+@iiitm\.ac\.in$')
+    type : constr(regex=r'^(student|admin)$')
+    otp : constr(regex=r'^[0-9][0-9][0-9][0-9][0-9]$')
+
+class changePasswordForgot(BaseModel):
+    newPassword : str
+    token : str
 # ------------------------------------------------------------------
+
 
 # ----------------------------STUDENT SCHEMAS-------------------------
 class signupStudent(BaseModel):
