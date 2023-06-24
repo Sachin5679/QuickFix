@@ -66,6 +66,15 @@ def getMyDetails(student:models.Student = Depends(getCurrentUser)):
 # ------------------------------------------------------------------
 
 
+# ----------------------------GET ALL STUDENTS-------------------------
+@userRouter.get("/student" , response_model=list[schemas.returnStudent])
+def getAllStudents(db:Session = Depends(getdb) , user = Depends(getCurrentUser)):
+
+    allStudents = db.query(models.Student).all()
+    return allStudents
+# ------------------------------------------------------------------
+
+
 # ----------------------------GET SPECIFIC STUDENT-------------------------
 @userRouter.get("/student/{id}" , response_model=schemas.returnStudent)
 def getSpecificStudent(id:int , db:Session = Depends(getdb) , user = Depends(getCurrentUser)):
