@@ -36,7 +36,7 @@ def signupAdmin(data : schemas.signupAdmin , db:Session = Depends(getdb)):
 # ------------------------------------------------------------------
 
 
-# ----------------------------GET ALL STUDENTS-------------------------
+# ----------------------------GET ALL ADMINS-------------------------
 @adminRouter.get("/admin" , response_model=list[schemas.returnAdmin])
 def getAllAdmins(db:Session = Depends(getdb) , user = Depends(getCurrentUser)):
 
