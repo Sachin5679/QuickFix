@@ -144,9 +144,9 @@ class Image(Base):
 # ------------------------------------------------------------------
 
 
-# ----------------------------TOKEN MODEL-------------------------
-class Token(Base):
-    __tablename__ = "tokens"
+# ----------------------------STUDENT TOKEN MODEL-------------------------
+class StudentToken(Base):
+    __tablename__ = "student_tokens"
 
     studentId = Column(Integer , ForeignKey("students.id" , ondelete="CASCADE"))
     token = Column(String , nullable=False)
@@ -157,11 +157,36 @@ class Token(Base):
 # ------------------------------------------------------------------
 
 
-# ----------------------------OTP MODEL-------------------------
-class OTP(Base):
-    __tablename__ = "otps"
+# ----------------------------ADMIN TOKEN MODEL-------------------------
+class AdminToken(Base):
+    __tablename__ = "admin_tokens"
+
+    adminId = Column(Integer , ForeignKey("admins.id" , ondelete="CASCADE"))
+    token = Column(String , nullable=False)
+
+    __table_args__ = (
+        PrimaryKeyConstraint("adminId" , "token"),
+    )
+# ------------------------------------------------------------------
+
+
+
+# ----------------------------STUDENT OTP MODEL-------------------------
+class StudentOTP(Base):
+    __tablename__ = "student_otps"
 
     studentEmail = Column(String , ForeignKey("students.email" , ondelete="CASCADE") , primary_key=True)
+    otp = Column(String , nullable=False)
+    created = Column(DateTime , default=datetime.now)
+# ------------------------------------------------------------------
+
+
+
+# ----------------------------ADMIN OTP MODEL-------------------------
+class AdminOTP(Base):
+    __tablename__ = "admin_otps"
+
+    adminEmail = Column(String , ForeignKey("admins.email" , ondelete="CASCADE") , primary_key=True)
     otp = Column(String , nullable=False)
     created = Column(DateTime , default=datetime.now)
 # ------------------------------------------------------------------

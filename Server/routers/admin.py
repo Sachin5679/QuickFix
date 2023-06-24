@@ -1,6 +1,7 @@
 
 from fastapi import APIRouter , status , HTTPException , Depends
 from Server.database import getdb
+from Server.routers.auth import getCurrentUser
 from sqlalchemy.orm.session import Session
 
 import Server.config as config
@@ -32,6 +33,15 @@ def signupAdmin(data : schemas.signupAdmin , db:Session = Depends(getdb)):
     db.refresh(newAdmin)
 
     return newAdmin
+# ------------------------------------------------------------------
+
+
+# ----------------------------GET ALL STUDENTS-------------------------
+@adminRouter.get("/admin" , response_model=list[schemas.returnAdmin])
+def getAllAdmins(db:Session = Depends(getdb) , user = Depends(getCurrentUser)):
+
+    allAdmins = db.query(models.Admin).all()
+    return allAdmins
 # ------------------------------------------------------------------
 
 

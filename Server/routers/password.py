@@ -1,6 +1,7 @@
 
 from fastapi import APIRouter , status , HTTPException , Depends
 from Server.database import getdb
+from Server.routers.auth import getCurrentUser
 from sqlalchemy.orm.session import Session
 from datetime import datetime , timedelta
 from pydantic import Field , Extra
@@ -50,32 +51,60 @@ def verifyChangePasswordToken(token:str):
 
 # ----------------------------SEND OTP-------------------------
 @passRouter.post("/password/send-otp")
-async def sendOtp(data:schemas.emailForOtp , db:Session = Depends(getdb)):
-    
-    student = db.query(models.Student).filter(models.Student.email == data.email).first()
-    if student == None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Student not found")
-    
-    newOTP = str(r.randrange(10000 , 99999))
+async def sendOtp(data:schemas.sendOtp , db:Session = Depends(getdb)):
+    if data.type == "student":
+        student = db.query(models.Student).filter(models.Student.email == data.email).first()
+        if student == None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Student not found")
+        
+        newOTP = str(r.randrange(10000 , 99999))
 
-    otpRow = db.query(models.OTP).filter(models.OTP.studentEmail == student.email).first()
-    if otpRow != None:
-        db.delete(otpRow)
+        otpRow = db.query(models.StudentOTP).filter(models.StudentOTP.studentEmail == student.email).first()
+        if otpRow != None:
+            db.delete(otpRow)
+            db.commit()
 
-    otpRow = models.OTP(
-        studentEmail = student.email,
-        otp = newOTP
-    )
+        otpRow = models.StudentOTP(
+            studentEmail = student.email,
+            otp = newOTP
+        )
 
-    db.add(otpRow)
-    db.commit()
+        db.add(otpRow)
+        db.commit()
 
-    subject = "Forgot Password"
-    html = f"""<p>OTP to change your password is {newOTP}</p>"""
+        subject = "Forgot Password"
+        html = f"""<p>OTP to change your password is {newOTP}</p>"""
 
-    await utils.sendMail(recipients=[student.email] , subject=subject , html=html)
+        await utils.sendMail(recipients=[student.email] , subject=subject , html=html)
 
-    return {"message" : "OTP sent"}
+        return {"message" : "OTP sent"}
+
+    else:
+        admin = db.query(models.Admin).filter(models.Admin.email == data.email).first()
+        if admin == None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Admin not found")
+        
+        newOTP = str(r.randrange(10000 , 99999))
+
+        otpRow = db.query(models.AdminOTP).filter(models.AdminOTP.adminEmail == admin.email).first()
+        if otpRow != None:
+            db.delete(otpRow)
+            db.commit()
+
+        otpRow = models.AdminOTP(
+            adminEmail = admin.email,
+            otp = newOTP
+        )
+
+        db.add(otpRow)
+        db.commit()
+
+        subject = "Forgot Password"
+        html = f"""<p>OTP to change your password is {newOTP}</p>"""
+
+        await utils.sendMail(recipients=[admin.email] , subject=subject , html=html)
+
+        return {"message" : "OTP sent"}
 # ------------------------------------------------------------------
 
 
@@ -83,25 +112,48 @@ async def sendOtp(data:schemas.emailForOtp , db:Session = Depends(getdb)):
 # ----------------------------VERIFY OTP-------------------------
 @passRouter.post("/password/verify-otp")
 def verifyOTP(data:schemas.verifyOtp , db:Session = Depends(getdb)):
-
-    expiryTime = datetime.now() - timedelta(minutes=settings.OTP_EXPIRE_MINUTES)
-    expiredOTPs = db.query(models.OTP).filter(models.OTP.created <= expiryTime).all()
-    for i in expiredOTPs:
-        db.delete(i)
     
+    if data.type == "student":
+        expiryTime = datetime.now() - timedelta(minutes=settings.OTP_EXPIRE_MINUTES)
+        expiredOTPs = db.query(models.StudentOTP).filter(models.StudentOTP.created <= expiryTime).all()
+        for i in expiredOTPs:
+            db.delete(i)
+            db.commit()
+        
 
-    otpRow = db.query(models.OTP).filter(models.OTP.studentEmail == data.email).first()
-    if otpRow == None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Otp may be expired")
+        otpRow = db.query(models.StudentOTP).filter(models.StudentOTP.studentEmail == data.email).first()
+        if otpRow == None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Otp may be expired")
 
-    if otpRow.otp != data.otp:
-        raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE , detail="Invalid OTP")
+        if otpRow.otp != data.otp:
+            raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE , detail="Invalid OTP")
+        
+        db.delete(otpRow)
+        db.commit()
+
+        passToken = createChangePasswordToken({"email" : data.email , "type" : data.type})
+        return {"password_token" : passToken}
     
-    db.delete(otpRow)
-    db.commit()
+    else:
+        expiryTime = datetime.now() - timedelta(minutes=settings.OTP_EXPIRE_MINUTES)
+        expiredOTPs = db.query(models.AdminOTP).filter(models.AdminOTP.created <= expiryTime).all()
+        for i in expiredOTPs:
+            db.delete(i)
+            db.commit()
+        
 
-    passToken = createChangePasswordToken({"email" : data.email , "type" : data.type})
-    return {"password_token" : passToken}
+        otpRow = db.query(models.AdminOTP).filter(models.AdminOTP.adminEmail == data.email).first()
+        if otpRow == None:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Otp may be expired")
+
+        if otpRow.otp != data.otp:
+            raise HTTPException(status_code=status.HTTP_406_NOT_ACCEPTABLE , detail="Invalid OTP")
+        
+        db.delete(otpRow)
+        db.commit()
+
+        passToken = createChangePasswordToken({"email" : data.email , "type" : data.type})
+        return {"password_token" : passToken}
 # ------------------------------------------------------------------
 
 
@@ -118,7 +170,7 @@ def changePasswordForgot(data:schemas.changePasswordForgot , db:Session = Depend
         
         student.password = utils.hashPassword(data.newPassword)
         
-        allTokens = db.query(models.Token).filter(models.Token.studentId == student.id).all()
+        allTokens = db.query(models.StudentToken).filter(models.StudentToken.studentId == student.id).all()
         for i in allTokens:
             db.delete(i)
 
@@ -129,7 +181,13 @@ def changePasswordForgot(data:schemas.changePasswordForgot , db:Session = Depend
         admin = db.query(models.Admin).filter(models.Admin.email == payload["email"]).first()
         if admin == None:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="admin not found")
+        
         admin.password = utils.hashPassword(data.newPassword)
+        
+        allTokens = db.query(models.AdminToken).filter(models.AdminToken.adminId == admin.id).all()
+        for i in allTokens:
+            db.delete(i)
+
         db.commit()
 
         return {"message" : "Password Changed"}
@@ -139,22 +197,24 @@ def changePasswordForgot(data:schemas.changePasswordForgot , db:Session = Depend
 
 # ----------------------------CHANGE PASSWORD-------------------------
 @passRouter.patch("/password" , status_code=status.HTTP_204_NO_CONTENT)
-def changePassword(data:schemas.changePassword , db:Session = Depends(getdb)):
+def changePassword(data:schemas.changePassword , user = Depends(getCurrentUser) , db:Session = Depends(getdb)):
 
-    if data.type == "student":
-        student = db.query(models.Student).filter(models.Student.email == data.email).first()
-        if student == None:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Student not found")
+    if not utils.verifyPassword(data.oldPassword , user.password):
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY , detail="Invalid Credentials")
+    
+    user.password = utils.hashPassword(data.newPassword)
 
-        if not utils.verifyPassword(data.oldPassword , student.password):
-            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY , detail="Invalid Credentials")
-        
-        student.password = utils.hashPassword(data.newPassword)
-        allTokens = db.query(models.Token).filter(models.Token.studentId == student.id).all()
+    if isinstance(user , models.Student):
+        allTokens = db.query(models.StudentToken).filter(models.StudentToken.studentId == user.id).all()
+        for i in allTokens:
+            db.delete(i)
+    
+    else:
+        allTokens = db.query(models.AdminToken).filter(models.AdminToken.adminId == user.id).all()
         for i in allTokens:
             db.delete(i)
 
-        db.commit()
+    db.commit()
 # ------------------------------------------------------------------
 
 

@@ -53,14 +53,15 @@ def getCurrentUser(token:str = Depends(oauth2Scheme) , db:Session = Depends(getd
     payload = verifyAccessToken(token)
 
     if payload["type"] == "student":
-        if db.query(models.Token).filter(models.Token.token == token).first() != None:
+        if db.query(models.StudentToken).filter(models.StudentToken.token == token).first() != None:
             student = db.query(models.Student).filter(models.Student.email == str(payload["id"])).first()
             if student != None:
                 return student
     else:
-        admin = db.query(models.Admin).filter(models.Admin.email == str(payload["id"])).first()
-        if admin != None:
-            return admin
+        if db.query(models.AdminToken).filter(models.AdminToken.token == token).first() != None:
+            admin = db.query(models.Admin).filter(models.Admin.email == str(payload["id"])).first()
+            if admin != None:
+                return admin
     
     raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="Invalid Credentials")
 # ------------------------------------------------------------------
@@ -70,11 +71,9 @@ def getCurrentUser(token:str = Depends(oauth2Scheme) , db:Session = Depends(getd
 # ----------------------------LOGIN-------------------------
 @authRouter.post("/login")
 def login(data:OAuth2PasswordRequestForm = Depends() , db:Session = Depends(getdb)):
-    print(data.client_id)
+
     if data.client_id == "student":
-        student = db.query(models.Student)
-        student = student.filter(models.Student.email == data.username)
-        student = student.first()
+        student = db.query(models.Student).filter(models.Student.email == data.username).first()
 
         if student == None or utils.verifyPassword(data.password , student.password) == False:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Invalid Credentials")
@@ -88,7 +87,7 @@ def login(data:OAuth2PasswordRequestForm = Depends() , db:Session = Depends(getd
         }
         token = createAccessToken(payload)
 
-        tokenRow = models.Token(
+        tokenRow = models.StudentToken(
             studentId = student.id,
             token = token
         )
@@ -101,19 +100,23 @@ def login(data:OAuth2PasswordRequestForm = Depends() , db:Session = Depends(getd
             }
     
     else:
-        admin = db.query(models.Admin)
-        admin = admin.filter(models.Admin.email == data.username)
-        admin = admin.first()
+        admin = db.query(models.Admin).filter(models.Admin.email == data.username).first()
 
         if admin == None or utils.verifyPassword(data.password , admin.password) == False:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Invalid Credentials")
 
         payload = {
-            "id" : admin.id,
+            "id" : admin.email,
             "type" : "admin"
         }
-
         token = createAccessToken(payload)
+
+        tokenRow = models.AdminToken(
+            adminId = admin.id,
+            token = token
+        )
+        db.add(tokenRow)
+        db.commit()
 
         return {
             "access_token": token, 

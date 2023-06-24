@@ -9,13 +9,12 @@ class login(BaseModel):
     type : constr(regex=r'^(student|admin)$')
 
 class changePassword(BaseModel):
-    email : constr(regex=r'^.+@iiitm\.ac\.in$')
     oldPassword : str
     newPassword : str
-    type : constr(regex=r'^(student|admin)$')
 
-class emailForOtp(BaseModel):
+class sendOtp(BaseModel):
     email : constr(regex=r'^.+@iiitm\.ac\.in$')
+    type : constr(regex=r'^(student|admin)$')
 
 class verifyOtp(BaseModel):
     email : constr(regex=r'^.+@iiitm\.ac\.in$')
@@ -60,6 +59,7 @@ class signupAdmin(BaseModel):
     password : str
 
 class returnAdmin(BaseModel):
+    id : int
     name : str
     email : str
     hostel : str
