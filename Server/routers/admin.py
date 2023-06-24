@@ -60,5 +60,19 @@ def getSpecificAdmin(id:int , db:Session = Depends(getdb)):
 # ------------------------------------------------------------------
 
 
+# ----------------------------UPDATE ADMIN PROFILE-------------------------
+@adminRouter.put("/admin/me" , response_model=schemas.returnAdmin)
+def updateadminProfile(data:schemas.updateAdmin , admin:models.Admin = Depends(getCurrentUser) , db:Session = Depends(getdb)):
+    if not isinstance(admin , models.Admin):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="Not allowed")
+    
+    if data.name != None:
+        admin.name = data.name
+    if data.hostel != None:
+        admin.hostel = data.hostel
 
+    db.commit()
+    db.refresh(admin)
 
+    return admin
+# ------------------------------------------------------------------

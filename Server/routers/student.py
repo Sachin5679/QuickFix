@@ -92,3 +92,23 @@ def getSpecificStudent(id:int , db:Session = Depends(getdb) , user = Depends(get
     return student
 # ------------------------------------------------------------------
 
+
+
+# ----------------------------UPDATE STUDENT PROFILE-------------------------
+@userRouter.put("/student/me" , response_model=schemas.returnStudent)
+def updateStudentProfile(data:schemas.updateStudent , student:models.Student = Depends(getCurrentUser) , db:Session = Depends(getdb)):
+    if not isinstance(student , models.Student):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="Not allowed")
+    
+    if data.name != None:
+        student.name = data.name
+    if data.hostel != None:
+        student.hostel = data.hostel
+    if data.room != None:
+        student.room = data.room
+
+    db.commit()
+    db.refresh(student)
+
+    return student
+# ------------------------------------------------------------------

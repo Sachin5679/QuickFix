@@ -35,8 +35,10 @@ class signupStudent(BaseModel):
     room : str
     password : str
 
-# class changePassword(BaseModel):
-#     password : str
+class updateStudent(BaseModel):
+    name : str | None
+    hostel : constr(regex=r'^(bh1|bh2|bh3|gh)$') | None
+    room : str | None
 
 class returnStudent(BaseModel):
     id : int
@@ -57,6 +59,10 @@ class signupAdmin(BaseModel):
     email : constr(regex=r'^.+@iiitm\.ac\.in$')
     hostel : constr(regex=r'^(bh1|bh2|bh3|gh)$')
     password : str
+
+class updateAdmin(BaseModel):
+    name : str | None
+    hostel : constr(regex=r'^(bh1|bh2|bh3|gh)$') | None
 
 class returnAdmin(BaseModel):
     id : int
