@@ -48,6 +48,9 @@ def acceptAComplaint(id:int , admin:models.Admin = Depends(getCurrentUser) , db:
     if complaint == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Complaint not found")
 
+    if complaint.location != admin.hostel:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Not allowed")
+
     if complaint.state != "new":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Complaint is not in new state")
     
@@ -69,6 +72,9 @@ def closeAComplaint(id:int , admin:models.Admin = Depends(getCurrentUser) , db:S
     if complaint == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Complaint not found")
 
+    if complaint.location != admin.hostel:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Not allowed")
+
     if complaint.state != "done":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Complaint is not in done state")
     
@@ -89,6 +95,9 @@ def rejectAComplaint(id:int , data:schemas.requestRejectReason , admin:models.Ad
 
     if complaint == None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Complaint not found")
+
+    if complaint.location != admin.hostel:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Not allowed")
 
     if complaint.state != "new":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Complaint is not in new state")

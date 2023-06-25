@@ -153,7 +153,7 @@ class createCommonComplaint(BaseModel):
     title : str
     description : str
     category : constr(regex=r'^(electrical|carpentry|plumbing)$')
-    location : constr(regex=r'^(bh1|bh2|bh3|gh|spx|lib)$')
+    location : constr(regex=r'^(bh1|bh2|bh3|gh)$')
     object : constr(regex=r'^(' + "|".join(commonCarpentryObjects + commonElectricalObjects + commonPlumbingObjects) + r')$')
     objectId : constr(regex=r'^(' + "|".join(possibleObjectId) + r')$')
     password : str

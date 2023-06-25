@@ -37,7 +37,7 @@ class Student(Base):
     room = Column(String , nullable=False)
     password = Column(String , nullable= False)
     created = Column(DateTime , default=datetime.now)
-    complaints = relationship("Complaint" , back_populates="student")
+    complaints = relationship("Complaint" , back_populates="student" , cascade="all, delete")
     
     __table_args__ = (
         CheckConstraint(email.like(r"%iiitm.ac.in")),
@@ -71,13 +71,13 @@ class Complaint(Base):
     objectId = Column(String)
     studentId = Column(Integer , ForeignKey("students.id" , ondelete="CASCADE"))
     student = relationship("Student" , back_populates="complaints")
-    rejectReason = relationship("RejectedComplaint", uselist=False, back_populates="complaint")
-    whoUpvoted = relationship("Upvotes" , back_populates="complaint")
+    rejectReason = relationship("RejectedComplaint", uselist=False, back_populates="complaint" , cascade="all, delete")
+    whoUpvoted = relationship("Upvotes" , back_populates="complaint" , cascade="all, delete")
     image = relationship("Image" , uselist=False , back_populates="complaint")
     
     __table_args__ = (
         CheckConstraint(category.in_(["electrical" , "carpentry" , "plumbing"]) , name="check_category"),
-        CheckConstraint(location.in_(["bh1" , "bh2" , "bh3" , "gh" , "spx" , "lib"]) , name="check_location"),
+        CheckConstraint(location.in_(["bh1" , "bh2" , "bh3" , "gh"]) , name="check_location"),
         CheckConstraint(state.in_(["new" , "accepted" , "rejected" , "done" , "closed"]) , name="check_state"),
         CheckConstraint(type.in_(["personal" , "common"]) , name="check_type"),
         CheckConstraint(object.in_([
@@ -170,7 +170,6 @@ class AdminToken(Base):
 # ------------------------------------------------------------------
 
 
-
 # ----------------------------STUDENT OTP MODEL-------------------------
 class StudentOTP(Base):
     __tablename__ = "student_otps"
@@ -179,7 +178,6 @@ class StudentOTP(Base):
     otp = Column(String , nullable=False)
     created = Column(DateTime , default=datetime.now)
 # ------------------------------------------------------------------
-
 
 
 # ----------------------------ADMIN OTP MODEL-------------------------
