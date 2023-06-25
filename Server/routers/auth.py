@@ -15,7 +15,7 @@ from jose import jwt , JWTError
 
 authRouter = APIRouter(tags=["Authentication"])
 
-oauth2Scheme = OAuth2PasswordBearer(tokenUrl="login")
+oauth2Scheme = OAuth2PasswordBearer(tokenUrl="login-form")
 
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHN = settings.ALGORITHM
@@ -68,8 +68,8 @@ def getCurrentUser(token:str = Depends(oauth2Scheme) , db:Session = Depends(getd
 
 
 
-# ----------------------------LOGIN-------------------------
-@authRouter.post("/login")
+# ----------------------------LOGIN (FORM DATA)-------------------------
+@authRouter.post("/login-form")
 def login(data:OAuth2PasswordRequestForm = Depends() , db:Session = Depends(getdb)):
 
     if data.client_id == "student":
@@ -126,76 +126,59 @@ def login(data:OAuth2PasswordRequestForm = Depends() , db:Session = Depends(getd
 
 
 
+# ----------------------------LOGIN (JSON DATA)-------------------------
+@authRouter.post("/login")
+def login(data:schemas.login , db:Session = Depends(getdb)):
 
+    if data.type == "student":
+        student = db.query(models.Student).filter(models.Student.email == data.email).first()
 
-
-
-
-
-
-
-
-
-
-
-
-# # ----------------------------LOGIN-------------------------
-# @authRouter.post("/login")
-# def login(data:schemas.login , db:Session = Depends(getdb)):
-
-#     if data.type == "student":
-#         student = db.query(models.Student)
-#         student = student.filter(models.Student.email == data.email)
-#         student = student.first()
-
-#         if student == None or utils.verifyPassword(data.password , student.password) == False:
-#             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Invalid Credentials")
+        if student == None or utils.verifyPassword(data.password , student.password) == False:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Invalid Credentials")
         
-#         if student.verified == False:
-#             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="Email not verified")
+        if student.verified == False:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="Email not verified")
 
-#         payload = {
-#             "id" : student.email,
-#             "type" : "student"
-#         }
-#         token = createAccessToken(payload)
-#         return {"token" : token}
+        payload = {
+            "id" : student.email,
+            "type" : "student"
+        }
+        token = createAccessToken(payload)
+
+        tokenRow = models.StudentToken(
+            studentId = student.id,
+            token = token
+        )
+        db.add(tokenRow)
+        db.commit()
+        
+        return {
+            "access_token": token, 
+            "token_type": "bearer"
+            }
     
-#     else:
-#         admin = db.query(models.Admin)
-#         admin = admin.filter(models.Admin.email == data.email)
-#         admin = admin.first()
+    else:
+        admin = db.query(models.Admin).filter(models.Admin.email == data.email).first()
 
-#         if admin == None or utils.verifyPassword(data.password , admin.password) == False:
-#             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Invalid Credentials")
+        if admin == None or utils.verifyPassword(data.password , admin.password) == False:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Invalid Credentials")
 
-#         payload = {
-#             "id" : admin.id,
-#             "type" : "admin"
-#         }
+        payload = {
+            "id" : admin.email,
+            "type" : "admin"
+        }
+        token = createAccessToken(payload)
 
-#         token = createAccessToken(payload)
-#         return {"token" : token}
-# # ------------------------------------------------------------------
+        tokenRow = models.AdminToken(
+            adminId = admin.id,
+            token = token
+        )
+        db.add(tokenRow)
+        db.commit()
 
-
-
-
-# ----------------------------FORGOT PASSWORD-------------------------
-# @authRouter.post("/forgotpass")
-# def forgotPassword(data:schemas.forgotPass , db:Session = Depends(getCurrentUser)):
-#     user = None
-#     if data.type == "student":
-#         user = db.query(models.Student).filter(models.Student.email == data.email).first()
-#         if user == None:
-#             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="User not found")
-
-#     else:
-#         user = db.query(models.Admin).filter(models.Admin.email == data.email).first()
-#         if user == None:
-#             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="User not found")
-
-
-#     html = """<a href="REACT LINK>Change Your Password</a>"""
+        return {
+            "access_token": token, 
+            "token_type": "bearer"
+            }
 # ------------------------------------------------------------------
 
