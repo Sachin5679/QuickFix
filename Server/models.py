@@ -69,6 +69,7 @@ class Complaint(Base):
     category = Column(String , nullable=False)
     object = Column(String , nullable=False)
     objectId = Column(String)
+    created = Column(DateTime , default=datetime.now)
     studentId = Column(Integer , ForeignKey("students.id" , ondelete="CASCADE"))
     student = relationship("Student" , back_populates="complaints")
     rejectReason = relationship("RejectedComplaint", uselist=False, back_populates="complaint" , cascade="all, delete")

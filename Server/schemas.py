@@ -1,6 +1,7 @@
 
 
 from pydantic import BaseModel , constr
+from datetime import datetime
 
 # ----------------------------LOGIN SCHEMA-------------------------
 class login(BaseModel):
@@ -47,6 +48,7 @@ class returnStudent(BaseModel):
     hostel : str
     room : str
     verified : str
+    created : datetime
 
     class Config():
         orm_mode = True
@@ -69,6 +71,7 @@ class returnAdmin(BaseModel):
     name : str
     email : str
     hostel : str
+    created : datetime
 
     class Config():
         orm_mode = True
@@ -205,6 +208,7 @@ class returnComplaint(BaseModel):
     location : str
     object : str
     objectId : str
+    created : datetime
     student : returnStudentInComplaint
     rejectReason : returnRejectReason | None
     whoUpvoted : list[returnWhoUpvoted]
