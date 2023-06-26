@@ -29,7 +29,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES= settings.ACCESS_TOKEN_EXPIRE_MINUTES
 def createAccessToken(data:dict = {}):
     toEncode = data.copy()
 
-    expire = datetime.utcnow() + timedelta(days=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     toEncode["exp"] = expire
 
     token = jwt.encode(toEncode , SECRET_KEY , algorithm=ALGORITHN)
@@ -190,7 +190,7 @@ async def deleteAllExpiredTokens():
     print("Deleting Expired Tokens")
 
     db:Session = sessionlocal()
-    expTime = datetime.now() - timedelta(days=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    expTime = datetime.now() - timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
     allExpiredStudetTokens = db.query(models.StudentToken).filter(models.StudentToken.created <= expTime).all()
     allExpiredAdminTokens = db.query(models.AdminToken).filter(models.AdminToken.created <= expTime).all()

@@ -48,3 +48,6 @@ import Server.models as models
 models.Base.metadata.create_all(engine)
 # ------------------------------------------------------------------
 
+@app.get("/")
+def func():
+    return "Hello World"
