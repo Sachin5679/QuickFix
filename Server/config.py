@@ -8,7 +8,8 @@ class Settings(BaseSettings):
     DATABASE_PASSWORD : str
     SECRET_KEY : str
     ALGORITHM : str
-    ACCESS_TOKEN_EXPIRE_DAYS : int
+    ACCESS_TOKEN_EXPIRE_MINUTES : int
+    DELETE_EXPIRED_TOKEN_EVERY_MINUTES : int
     MAIL_USERNAME : str
     MAIL_PASSWORD : str
     MAIL_FROM : str

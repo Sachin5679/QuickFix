@@ -1,14 +1,16 @@
 
-from fastapi import APIRouter , status , HTTPException , Depends
+from fastapi import APIRouter , status , HTTPException , Depends , BackgroundTasks
 from Server.database import getdb
 from sqlalchemy.orm.session import Session
 from datetime import datetime , timedelta
 from pydantic import Field , Extra
+import asyncio
 
 from Server.config import settings
 import Server.utils as utils
 import Server.schemas as schemas
 import Server.models as models
+from Server.database import sessionlocal
 
 from fastapi.security.oauth2 import OAuth2PasswordBearer , OAuth2PasswordRequestForm
 from jose import jwt , JWTError
@@ -19,7 +21,7 @@ oauth2Scheme = OAuth2PasswordBearer(tokenUrl="login-form")
 
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHN = settings.ALGORITHM
-ACCESS_TOKEN_EXPIRE_DAYS = settings.ACCESS_TOKEN_EXPIRE_DAYS
+ACCESS_TOKEN_EXPIRE_MINUTES= settings.ACCESS_TOKEN_EXPIRE_MINUTES
 
 
 
@@ -27,7 +29,7 @@ ACCESS_TOKEN_EXPIRE_DAYS = settings.ACCESS_TOKEN_EXPIRE_DAYS
 def createAccessToken(data:dict = {}):
     toEncode = data.copy()
 
-    expire = datetime.utcnow() + timedelta(days=ACCESS_TOKEN_EXPIRE_DAYS)
+    expire = datetime.utcnow() + timedelta(days=ACCESS_TOKEN_EXPIRE_MINUTES)
     toEncode["exp"] = expire
 
     token = jwt.encode(toEncode , SECRET_KEY , algorithm=ALGORITHN)
@@ -182,3 +184,39 @@ def login(data:schemas.login , db:Session = Depends(getdb)):
             }
 # ------------------------------------------------------------------
 
+
+# ----------------------------DELETE EXPIRED TOKENS (EVERY 30 MIN)-------------------------
+async def deleteAllExpiredTokens():
+    print("Deleting Expired Tokens")
+
+    db:Session = sessionlocal()
+    expTime = datetime.now() - timedelta(days=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+
+    allExpiredStudetTokens = db.query(models.StudentToken).filter(models.StudentToken.created <= expTime).all()
+    allExpiredAdminTokens = db.query(models.AdminToken).filter(models.AdminToken.created <= expTime).all()
+
+    cnt = 0
+    for i in allExpiredStudetTokens:
+        db.delete(i)
+        cnt+=1
+
+    for i in allExpiredAdminTokens:
+        db.delete(i)
+        cnt+=1
+    
+    db.commit()
+    db.close()
+
+    print(f"Deleted {cnt} Expired Tokens")
+
+
+def schedule_task():
+    loop = asyncio.get_event_loop()
+    loop.create_task(deleteAllExpiredTokens())
+    loop.call_later(settings.DELETE_EXPIRED_TOKEN_EVERY_MINUTES*60, schedule_task)
+
+
+@authRouter.on_event("startup")
+async def startup_event():
+    schedule_task()
+# ------------------------------------------------------------------

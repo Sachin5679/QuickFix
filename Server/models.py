@@ -151,6 +151,7 @@ class StudentToken(Base):
 
     studentId = Column(Integer , ForeignKey("students.id" , ondelete="CASCADE"))
     token = Column(String , nullable=False)
+    created = Column(DateTime , default=datetime.now)
 
     __table_args__ = (
         PrimaryKeyConstraint("studentId" , "token"),
@@ -164,6 +165,7 @@ class AdminToken(Base):
 
     adminId = Column(Integer , ForeignKey("admins.id" , ondelete="CASCADE"))
     token = Column(String , nullable=False)
+    created = Column(DateTime , default=datetime.now)
 
     __table_args__ = (
         PrimaryKeyConstraint("adminId" , "token"),
