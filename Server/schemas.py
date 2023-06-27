@@ -5,7 +5,7 @@ from datetime import datetime
 
 # ----------------------------LOGIN SCHEMA-------------------------
 class login(BaseModel):
-    email : constr(regex=r'^.+@iiitm\.ac\.in$')
+    email : constr(regex=r'^(bcs|imt|img)_20[12][0-9][01][0-9][0-9]@iiitm\.ac\.in$')
     password : str
     type : constr(regex=r'^(student|admin)$')
 
@@ -14,11 +14,11 @@ class changePassword(BaseModel):
     newPassword : str
 
 class sendOtp(BaseModel):
-    email : constr(regex=r'^.+@iiitm\.ac\.in$')
+    email : constr(regex=r'^(bcs|imt|img)_20[12][0-9][0-9][0-9][0-9]@iiitm\.ac\.in$')
     type : constr(regex=r'^(student|admin)$')
 
 class verifyOtp(BaseModel):
-    email : constr(regex=r'^.+@iiitm\.ac\.in$')
+    email : constr(regex=r'^(bcs|imt|img)_20[12][0-9][0-9][0-9][0-9]@iiitm\.ac\.in$')
     type : constr(regex=r'^(student|admin)$')
     otp : constr(regex=r'^[0-9][0-9][0-9][0-9][0-9]$')
 
@@ -31,7 +31,7 @@ class changePasswordForgot(BaseModel):
 # ----------------------------STUDENT SCHEMAS-------------------------
 class signupStudent(BaseModel):
     name : str
-    email : constr(regex=r'^.+@iiitm\.ac\.in$')
+    email : constr(regex=r'^(bcs|imt|img)_20[12][0-9][0-9][0-9][0-9]@iiitm\.ac\.in$')
     hostel : constr(regex=r'^(bh1|bh2|bh3|gh)$')
     room : int = Field(ge=1 , le=400)
     password : str = Field(min_length=6)
@@ -242,5 +242,5 @@ class returnComplaint(BaseModel):
 
 # ----------------------------EMAIL SCHEMA-------------------------
 class email(BaseModel):
-    email: constr(regex=r'^.+@iiitm\.ac\.in$')
+    email: constr(regex=r'^(bcs|imt|img)_20[12][0-9][01][0-9][0-9]@iiitm\.ac\.in$')
 # ------------------------------------------------------------------

@@ -68,7 +68,7 @@ def getMyDetails(student:models.Student = Depends(getCurrentUser)):
 
 # ----------------------------GET ALL STUDENTS-------------------------
 @userRouter.get("/student" , response_model=list[schemas.returnStudent])
-def getAllStudents(db:Session = Depends(getdb) , user = Depends(getCurrentUser)):
+def getAllStudents(db:Session = Depends(getdb)):  #  , user = Depends(getCurrentUser)
 
     allStudents = db.query(models.Student).all()
     return allStudents
@@ -111,4 +111,18 @@ def updateStudentProfile(data:schemas.updateStudent , student:models.Student = D
     db.refresh(student)
 
     return student
+# ------------------------------------------------------------------
+
+
+
+# ----------------------------DELETE A STUDENT-------------------------
+@userRouter.delete("/student/{id}" , status_code=status.HTTP_204_NO_CONTENT)
+def deleteStudent(id:int , db:Session = Depends(getdb)):
+    
+    student = db.query(models.Student).filter(models.Student.id == id).first()
+    if student == None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Student not found")
+    
+    db.delete(student)
+    db.commit()
 # ------------------------------------------------------------------
