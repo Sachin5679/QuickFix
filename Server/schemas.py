@@ -1,6 +1,6 @@
 
 
-from pydantic import BaseModel , constr
+from pydantic import BaseModel , constr , Field , validator
 from datetime import datetime
 
 # ----------------------------LOGIN SCHEMA-------------------------
@@ -33,13 +33,23 @@ class signupStudent(BaseModel):
     name : str
     email : constr(regex=r'^.+@iiitm\.ac\.in$')
     hostel : constr(regex=r'^(bh1|bh2|bh3|gh)$')
-    room : str
-    password : str
+    room : int = Field(ge=1 , le=400)
+    password : str = Field(min_length=6)
+
+    @validator('name')
+    def trim_whitespace(cls, value:str):
+        return value.strip()
 
 class updateStudent(BaseModel):
     name : str | None
     hostel : constr(regex=r'^(bh1|bh2|bh3|gh)$') | None
-    room : str | None
+    room : int | None = Field(ge=1 , le=400)
+
+    @validator('name')
+    def trim_whitespace(cls, value:str):
+        if value == None:
+            return None
+        return value.strip()
 
 class returnStudent(BaseModel):
     id : int
@@ -61,6 +71,10 @@ class signupAdmin(BaseModel):
     email : constr(regex=r'^.+@iiitm\.ac\.in$')
     hostel : constr(regex=r'^(bh1|bh2|bh3|gh)$')
     password : str
+
+    @validator('name')
+    def trim_whitespace(cls, value:str):
+        return value.strip()
 
 class updateAdmin(BaseModel):
     name : str | None
@@ -104,6 +118,9 @@ class createPersonalComplaint(BaseModel):
     object : constr(regex=r'^(' + "|".join(personalCarpentryObjects + personalElectricalObjects) + r')$')
     password : str
 
+    @validator('title' , 'description')
+    def trim_whitespace(cls, value:str):
+        return value.strip()
 # ------------------------------------------------------------------
 
 
@@ -161,6 +178,9 @@ class createCommonComplaint(BaseModel):
     objectId : constr(regex=r'^(' + "|".join(possibleObjectId) + r')$')
     password : str
 
+    @validator('title' , 'description')
+    def trim_whitespace(cls, value:str):
+        return value.strip()
 # ------------------------------------------------------------------
 
 

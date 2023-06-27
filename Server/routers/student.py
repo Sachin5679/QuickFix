@@ -28,7 +28,7 @@ async def signupStudent(data : schemas.signupStudent , db:Session = Depends(getd
         email = data.email,
         verified = False,
         hostel = data.hostel,
-        room = data.room,
+        room = str(data.room),
         password = utils.hashPassword(data.password)
     )
 
@@ -105,7 +105,7 @@ def updateStudentProfile(data:schemas.updateStudent , student:models.Student = D
     if data.hostel != None:
         student.hostel = data.hostel
     if data.room != None:
-        student.room = data.room
+        student.room = str(data.room)
 
     db.commit()
     db.refresh(student)
