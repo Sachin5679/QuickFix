@@ -1,5 +1,5 @@
 
-from fastapi import APIRouter , status , HTTPException , Depends
+from fastapi import APIRouter , status , HTTPException , Depends , BackgroundTasks
 from Server.database import getdb
 from sqlalchemy.orm.session import Session
 import secrets
@@ -13,9 +13,18 @@ from Server.routers.auth import getCurrentUser
 userRouter = APIRouter(tags=["Student"])
 
 
+# ----------------------------SEND VERIFICATION MAIL-------------------------
+async def sendVerificationMail(email , secret):
+    subject = "Email Verification"
+    html = f"""<a href='http://192.168.69.167:8000/verify/{secret}'>Click here to verify your email</a>"""
+
+    await utils.sendMail(recipients=[email] , subject=subject , html=html)
+# ------------------------------------------------------------------
+
+
 # ----------------------------CREATE STUDENT-------------------------
 @userRouter.post("/student" , status_code=status.HTTP_201_CREATED)
-async def signupStudent(data : schemas.signupStudent , db:Session = Depends(getdb)):
+async def signupStudent(data : schemas.signupStudent , bgTask:BackgroundTasks , db:Session = Depends(getdb)):
 
     check = db.query(models.Student)
     check = check.filter(models.Student.email == data.email)
@@ -39,10 +48,7 @@ async def signupStudent(data : schemas.signupStudent , db:Session = Depends(getd
 
     secret = secrets.token_urlsafe(32)
 
-    subject = "Email Verification"
-    html = f"""<a href='http://192.168.69.167:8000/verify/{secret}'>Click here to verify your email</a>"""
-
-    await utils.sendMail(recipients=[data.email] , subject=subject , html=html)
+    bgTask.add_task(sendVerificationMail , data.email , secret)
 
     secretRow = models.EmailVerify(
         studentId = newStudent.id,

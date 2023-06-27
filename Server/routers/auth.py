@@ -81,7 +81,7 @@ def login(data:OAuth2PasswordRequestForm = Depends() , db:Session = Depends(getd
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Invalid Credentials")
         
         if student.verified == False:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="Email not verified")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="Email is not verified")
 
         payload = {
             "id" : student.email,
@@ -139,7 +139,7 @@ def login(data:schemas.login , db:Session = Depends(getdb)):
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Invalid Credentials")
         
         if student.verified == False:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="Email not verified")
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="Email is not verified")
 
         payload = {
             "id" : student.email,
