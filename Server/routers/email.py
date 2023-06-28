@@ -32,14 +32,6 @@ def verifyEmail(secret:str , db:Session = Depends(getdb)):
 # ------------------------------------------------------------------
 
 
-# ----------------------------SEND VERIFICATION MAIL-------------------------
-async def sendMail(email , secret):
-    subject = "Email Verification"
-    html = f"""<a href='http://192.168.69.167:8000/verify/{secret}'>Click here to verify your email</a>"""
-
-    await utils.sendMail(recipients=[email] , subject=subject , html=html)
-# ------------------------------------------------------------------
-
 
 # ----------------------------SEND VERIFICATION EMAIL-------------------------
 @emailRouter.post("/verify")
@@ -58,6 +50,12 @@ async def sendVerificationMail(data:schemas.email , bgTask:BackgroundTasks , db:
     bgTask.add_task(sendMail , student.email , secretRow.secret)
 
     return {"message" : "Verification mail Sent"}
+
+async def sendMail(email , secret):
+    subject = "Email Verification"
+    html = f"""<a href='http://192.168.69.167:8000/verify/{secret}'>Click here to verify your email</a>"""
+
+    await utils.sendMail(recipients=[email] , subject=subject , html=html)
 # ------------------------------------------------------------------
 
 

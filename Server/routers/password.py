@@ -1,5 +1,5 @@
 
-from fastapi import APIRouter , status , HTTPException , Depends
+from fastapi import APIRouter , status , HTTPException , Depends , BackgroundTasks
 from Server.database import getdb
 from Server.routers.auth import getCurrentUser
 from sqlalchemy.orm.session import Session
@@ -51,7 +51,7 @@ def verifyChangePasswordToken(token:str):
 
 # ----------------------------SEND OTP-------------------------
 @passRouter.post("/password/send-otp")
-async def sendOtp(data:schemas.sendOtp , db:Session = Depends(getdb)):
+async def sendOtp(data:schemas.sendOtp , bgTask:BackgroundTasks , db:Session = Depends(getdb)):
     if data.type == "student":
         student = db.query(models.Student).filter(models.Student.email == data.email).first()
         if student == None:
@@ -72,10 +72,7 @@ async def sendOtp(data:schemas.sendOtp , db:Session = Depends(getdb)):
         db.add(otpRow)
         db.commit()
 
-        subject = "Forgot Password"
-        html = f"""<p>OTP to change your password is {newOTP}</p>"""
-
-        await utils.sendMail(recipients=[student.email] , subject=subject , html=html)
+        bgTask.add_task(sendOtpAsync , student.email , newOTP)
 
         return {"message" : "OTP sent"}
 
@@ -99,12 +96,16 @@ async def sendOtp(data:schemas.sendOtp , db:Session = Depends(getdb)):
         db.add(otpRow)
         db.commit()
 
-        subject = "Forgot Password"
-        html = f"""<p>OTP to change your password is {newOTP}</p>"""
-
-        await utils.sendMail(recipients=[admin.email] , subject=subject , html=html)
+        bgTask.add_task(sendOtpAsync , admin.email , newOTP)
 
         return {"message" : "OTP sent"}
+
+
+async def sendOtpAsync(email , otp):
+    subject = "Forgot Password"
+    html = f"""<p>OTP to change your password is {otp}</p>"""
+
+    await utils.sendMail(recipients=[email] , subject=subject , html=html)
 # ------------------------------------------------------------------
 
 

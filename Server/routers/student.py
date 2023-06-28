@@ -13,15 +13,6 @@ from Server.routers.auth import getCurrentUser
 userRouter = APIRouter(tags=["Student"])
 
 
-# ----------------------------SEND VERIFICATION MAIL-------------------------
-async def sendVerificationMail(email , secret):
-    subject = "Email Verification"
-    html = f"""<a href='http://192.168.69.167:8000/verify/{secret}'>Click here to verify your email</a>"""
-
-    await utils.sendMail(recipients=[email] , subject=subject , html=html)
-# ------------------------------------------------------------------
-
-
 # ----------------------------CREATE STUDENT-------------------------
 @userRouter.post("/student" , status_code=status.HTTP_201_CREATED)
 async def signupStudent(data : schemas.signupStudent , bgTask:BackgroundTasks , db:Session = Depends(getdb)):
@@ -59,6 +50,13 @@ async def signupStudent(data : schemas.signupStudent , bgTask:BackgroundTasks , 
     db.commit()
 
     return {"message" : "Account Created"}
+
+
+async def sendVerificationMail(email , secret):
+    subject = "Email Verification"
+    html = f"""<a href='http://192.168.69.167:8000/verify/{secret}'>Click here to verify your email</a>"""
+
+    await utils.sendMail(recipients=[email] , subject=subject , html=html)
 # ------------------------------------------------------------------
 
 
