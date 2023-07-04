@@ -4,7 +4,7 @@ from Server.database import getdb
 from sqlalchemy.orm.session import Session
 import secrets
 
-import Server.config as config
+from Server.config import settings
 import Server.utils as utils
 import Server.schemas as schemas
 import Server.models as models
@@ -53,7 +53,7 @@ async def sendVerificationMail(data:schemas.email , bgTask:BackgroundTasks , db:
 
 async def sendMail(email , secret):
     subject = "Email Verification"
-    html = f"""<a href='http://192.168.69.167:8000/verify/{secret}'>Click here to verify your email</a>"""
+    html = f"""<a href='{settings.DOMAIN}/verify/{secret}'>Click here to verify your email</a>"""
 
     await utils.sendMail(recipients=[email] , subject=subject , html=html)
 # ------------------------------------------------------------------

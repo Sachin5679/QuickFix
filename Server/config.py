@@ -2,6 +2,7 @@
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):
+    DOMAIN : str
     DATABASE_HOST : str
     DATABASE_DATABASE : str
     DATABASE_USER : str
