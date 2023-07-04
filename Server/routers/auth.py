@@ -156,7 +156,8 @@ def login(data:schemas.login , db:Session = Depends(getdb)):
         
         return {
             "access_token": token, 
-            "token_type": "bearer"
+            "token_type": "bearer",
+            "exp" : settings.ACCESS_TOKEN_EXPIRE_MINUTES
             }
     
     else:
@@ -180,7 +181,8 @@ def login(data:schemas.login , db:Session = Depends(getdb)):
 
         return {
             "access_token": token, 
-            "token_type": "bearer"
+            "token_type": "bearer",
+            "exp" : settings.ACCESS_TOKEN_EXPIRE_MINUTES
             }
 # ------------------------------------------------------------------
 
