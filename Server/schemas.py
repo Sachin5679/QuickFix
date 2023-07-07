@@ -127,11 +127,13 @@ class createPersonalComplaint(BaseModel):
 
 # ----------------------------COMMON COMPLAINT SCHEMA-------------------------
 commonElectricalObjects = [
-    "water cooler"
+    "water cooler",
+    "other"
 ]
 
 commonCarpentryObjects = [
-    "bathroom door"
+    "bathroom door",
+    "other"
 ]
 
 commonPlumbingObjects = [

@@ -1,0 +1,63 @@
+
+
+.home
+{
+    /* border: 4px solid red; */
+
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+
+}
+
+.container
+{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 3rem;
+}
+
+
+.logo
+{
+    height: 45px;
+    cursor: pointer;
+}
+
+.btnList
+{
+    list-style: none;
+    display: flex;
+    gap: 50px;
+}
+
+.btnList button
+{
+    border: none;
+    border-radius: 2rem;
+    padding: 1rem 2.5rem;
+
+    background-color: #19C37D;
+    
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btnList button:hover
+{
+    background-color: #16a86b;
+    cursor: pointer;
+}
+
+.btnList button:active
+{
+    scale: 0.98 0.98;
+}

@@ -1,0 +1,77 @@
+
+
+.container
+{
+    padding: 5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    width: 400px;
+
+    font-size: 1.4rem;
+}
+
+.container button
+{
+    border: none;
+    cursor: pointer;
+}
+
+.container button:active
+{
+    scale: 0.98 0.98;
+}
+
+
+
+/* -------------------------------INPUTS----------------------------- */
+.container input
+{
+    border: none;
+    font-size: 1.5rem;
+}
+
+.container .email , .container .pass , .container .signup , .container .name , .container .cpass , .container .room , .container .hostel
+{
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+/* -------------------------------------------------------------- */
+
+
+.container .location
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.container .location .room
+{
+    width: 80px;
+    padding-right: 0;
+}
+
+.container .location .hostel
+{
+    background-color: #425FC6;
+    color: white;
+    border: none;
+
+    font-size: 1.5rem;
+}
+
+.container .location .hostel option
+{
+    padding: 5px;
+    font-size: 1.5rem;
+    background-color: #fff;
+    color: #425FC6;
+}
+
+.container .signup
+{
+    background-color: #19C37D;
+    font-size: 1.6rem;
+    font-weight: 500;
+}
