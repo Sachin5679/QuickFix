@@ -1,0 +1,33 @@
+
+
+/* -------------------------------NAV----------------------------- */
+.container
+{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 3rem;
+}
+
+
+.logo
+{
+    height: 45px;
+    cursor: pointer;
+}
+
+.profile
+{
+    height: 45px;
+    cursor: pointer;
+}
+
+.profile:active , .logo:active
+{
+    scale: 0.99 0.99;
+}
+/* -------------------------------------------------------------- */

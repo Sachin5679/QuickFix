@@ -30,6 +30,11 @@
     cursor: pointer;
 }
 
+.logo:active
+{
+    scale: 0.99 0.99;
+}
+
 .btnList
 {
     list-style: none;

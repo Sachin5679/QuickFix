@@ -1,0 +1,46 @@
+
+
+.comp
+{
+    /* border: 2px solid blueviolet; */
+    width: 99%;
+    background-color: rgba(42, 42, 42, 0.7);
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.comp:hover
+{
+    background-color: rgba(20, 20, 20, 0.7);
+}
+
+.comp .state
+{
+    width: 1.5rem;
+    height: 10rem;
+    background-color: #D9D9D9;
+}
+
+.titleDesc
+{
+    /* border: 2px solid blueviolet; */
+    flex-basis: 70%;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.dateName
+{
+    /* border: 2px solid blue; */
+    flex-basis: 25%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    padding-right: 1rem;
+}
+

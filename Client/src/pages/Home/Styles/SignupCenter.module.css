@@ -37,6 +37,18 @@
     padding: 10px 20px;
     border-radius: 20px;
 }
+
+.container .room
+{
+    text-align: center;
+    width: 80px;
+    padding: 0 15px;
+}
+
+.container .room::-webkit-inner-spin-button
+{
+    -webkit-appearance: none;
+}
 /* -------------------------------------------------------------- */
 
 
@@ -44,12 +56,6 @@
 {
     display: flex;
     justify-content: space-between;
-}
-
-.container .location .room
-{
-    width: 80px;
-    padding-right: 0;
 }
 
 .container .location .hostel
@@ -75,3 +81,5 @@
     font-size: 1.6rem;
     font-weight: 500;
 }
+
+
