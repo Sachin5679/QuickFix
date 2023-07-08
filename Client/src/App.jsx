@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Dashboard from './pages/dashboard/dashboard.jsx'
-import Home from './pages/home/home.jsx'
+import Home from './pages/Home/Home.jsx'
 
 function App() {
 
@@ -13,6 +13,7 @@ function App() {
                     <Route path='/login' element={<Home mode={2}/>} />
                     <Route path='/signup' element={<Home mode={3}/>} />
                     <Route path='/signup/verify' element={<Home mode={4}/>} />
+                    <Route path='/forgot' element={<Home mode={5}/>} />
                     <Route path='/dashboard' element={<Dashboard />} />
                 </Routes>
             </BrowserRouter>

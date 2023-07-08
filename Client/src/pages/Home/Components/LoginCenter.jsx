@@ -1,6 +1,7 @@
 
 import { useState } from 'react'
 import styles from '../Styles/LoginCenter.module.css'
+import { useNavigate } from 'react-router-dom'
 
 function LoginCenter(){
     let [user , setUser] = useState({
@@ -8,6 +9,8 @@ function LoginCenter(){
         email : '',
         pass : ''
     })
+
+    let navigate = useNavigate()
 
     function handleSelectUser(e){
         setUser({
@@ -25,6 +28,10 @@ function LoginCenter(){
         })
     }
 
+    function handleForgotBtn(){
+        navigate('/forgot')
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.user}>
@@ -37,7 +44,7 @@ function LoginCenter(){
 
             <div className={styles.loginForgot}>
                 <button className={styles.login}>Log In</button>
-                <button className={styles.forgot}>Forgot Password?</button>
+                <button onClick={handleForgotBtn} className={styles.forgot}>Forgot Password?</button>
             </div>
         </div>
     )

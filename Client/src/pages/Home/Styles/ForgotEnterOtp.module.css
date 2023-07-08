@@ -1,0 +1,102 @@
+
+
+.container
+{
+    padding: 5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+
+    width: 400px;
+
+    font-size: 1.4rem;
+}
+
+.container button
+{
+    border: none;
+    cursor: pointer;
+}
+
+.container button:active
+{
+    scale: 0.98 0.98;
+}
+
+
+/* -------------------------------MESSAGE----------------------------- */
+.container p
+{
+    font-size: 1.8rem;
+}
+/* -------------------------------------------------------------- */
+
+
+
+/* -------------------------------OTP----------------------------- */
+.container .otps
+{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.container .otps .otp
+{
+    width: 4rem;
+    height: 4rem;
+    border: none;
+    border-radius: 1.3rem;
+
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+
+.container .otps .otp::-webkit-inner-spin-button
+{
+    -webkit-appearance: none;
+}
+/* -------------------------------------------------------------- */
+
+
+
+/* -------------------------------SUBMIT RESET----------------------------- */
+.container .submitResend
+{
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: 100%;
+}
+
+.container .submitResend .submit
+{
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: #19C37D;
+}
+
+.container .submitResend .submit:disabled
+{
+    background-color: #404040;
+    color: grey;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+.container .submitResend .submit:disabled:active
+{
+    scale: none;
+}
+
+.container .submitResend .resend
+{
+    align-self: flex-start;
+    background: none;
+    color: white;
+}
+
+/* -------------------------------------------------------------- */

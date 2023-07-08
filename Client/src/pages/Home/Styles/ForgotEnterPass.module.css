@@ -1,0 +1,47 @@
+
+.container
+{
+    padding: 6rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    width: 400px;
+
+    font-size: 1.4rem;
+}
+
+.container button
+{
+    border: none;
+    cursor: pointer;
+}
+
+.container button:active
+{
+    scale: 0.98 0.98;
+}
+
+
+/* -------------------------------INPUTS----------------------------- */
+.container input
+{
+    border: none;
+    font-size: 1.5rem;
+}
+
+.container .pass , .container .cpass , .container .submit
+{
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+/* -------------------------------------------------------------- */
+
+
+.container .submit
+{
+    background-color: #19C37D;
+    
+    font-size: 1.6rem;
+    font-weight: 500;
+}

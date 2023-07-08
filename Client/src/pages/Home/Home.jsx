@@ -8,6 +8,10 @@ import styles from './Home.module.css'
 import SignupCenter from './Components/SignupCenter'
 import VerifyEmail from './Components/VerifyEmail'
 import { useNavigate } from 'react-router-dom'
+import ForgotEnterEmail from './Components/ForgotEnterEmail'
+import ForgotEnterOtp from './Components/ForgotEnterOtp'
+import ForgotEnterPass from './Components/ForgotEnterPass'
+import ForgotSuccess from './Components/ForgotSuccess'
 
 
 export let modeContext = createContext()
@@ -41,7 +45,7 @@ function Home(props) {
                     <div className={styles.container}>
                         <img className={styles.logo} src="logo.png" alt="Logo" onClick={handleLogoBtn}/>
                         <ul className={styles.btnList}>
-                            {[1, 3].includes(mode) && <li><button onClick={handleLoginBtn}>Log In</button></li>}
+                            {[1, 3 , 6 , 5].includes(mode) && <li><button onClick={handleLoginBtn}>Log In</button></li>}
                             {[1, 2 , 4].includes(mode) && <li><button onClick={handleSignupBtn}>Sign Up</button></li>}
                         </ul>
                     </div>
@@ -51,6 +55,10 @@ function Home(props) {
                     {mode == 2 && <LoginCenter />}
                     {mode == 3 && <SignupCenter />}
                     {mode == 4 && <VerifyEmail />}
+                    {mode == 5 && <ForgotEnterEmail />}
+                    {mode == 6 && <ForgotEnterOtp />}
+                    {mode == 7 && <ForgotEnterPass />}
+                    {mode == 8 && <ForgotSuccess />}
                 </Center>
             </div>
         </modeContext.Provider>

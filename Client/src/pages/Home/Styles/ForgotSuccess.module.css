@@ -1,0 +1,40 @@
+
+
+.container
+{
+    padding: 6rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    width: 400px;
+
+    font-size: 1.4rem;
+}
+
+.container button
+{
+    border: none;
+    cursor: pointer;
+}
+
+.container button:active
+{
+    scale: 0.98 0.98;
+}
+
+
+.container p
+{
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+
+.container button
+{
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 1.5rem;
+    background-color: #19C37D;
+}

@@ -1,0 +1,93 @@
+
+
+.container
+{
+    padding: 4rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    width: 400px;
+
+    font-size: 1.4rem;
+}
+
+
+.container button
+{
+    border: none;
+    cursor: pointer;
+}
+
+.container button:active
+{
+    scale: 0.98 0.98;
+}
+
+
+/* -------------------------------SELECT USER----------------------------- */
+.container .user
+{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.container .user button
+{
+    border-radius: 2rem;
+
+    padding: 1rem 2rem;
+    background-color: #404040;
+    
+
+    color: white;
+}
+
+.container .user .active
+{
+    background-color: #425FC6;
+}
+/* -------------------------------------------------------------- */
+
+
+
+/* -------------------------------INPUTS----------------------------- */
+.container input
+{
+    border: none;
+    font-size: 1.5rem;
+}
+
+.container .email , .container .send
+{
+    padding: 10px 20px;
+    border-radius: 20px;
+}
+/* -------------------------------------------------------------- */
+
+
+
+/* -------------------------------Login Forgot----------------------------- */
+.container .sendLogin
+{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.container .sendLogin .send
+{
+    background-color: #19C37D;
+    
+    font-size: 1.6rem;
+    font-weight: 500;
+}
+
+.container .sendLogin .login
+{
+    align-self: flex-start;
+    background: none;
+    color: white;
+}
+/* -------------------------------------------------------------- */
