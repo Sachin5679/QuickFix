@@ -34,7 +34,8 @@
 
 .container .email , .container .pass , .container .signup , .container .name , .container .cpass , .container .room , .container .hostel
 {
-    padding: 10px 20px;
+    padding: 0 20px;
+    height: 4.2rem;
     border-radius: 20px;
 }
 
@@ -83,3 +84,15 @@
 }
 
 
+.container .signup:disabled
+{
+    background-color: #404040;
+    color: grey;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+.container .signup:disabled:active
+{
+    scale: none;
+}

@@ -61,7 +61,8 @@
 
 .container .email , .container .send
 {
-    padding: 10px 20px;
+    padding: 0 20px;
+    height: 4.2rem;
     border-radius: 20px;
 }
 /* -------------------------------------------------------------- */
@@ -82,6 +83,19 @@
     
     font-size: 1.6rem;
     font-weight: 500;
+}
+
+.container .sendLogin .send:disabled
+{
+    background-color: #404040;
+    color: grey;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+.container .sendLogin .send:disabled:active
+{
+    scale: none;
 }
 
 .container .sendLogin .login

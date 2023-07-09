@@ -1,8 +1,11 @@
 
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import styles from '../Styles/ForgotEnterEmail.module.css'
 import { useNavigate } from 'react-router-dom'
-import { modeContext } from '../Home'
+import { forgotContext, modeContext } from '../Home'
+import ClipLoader from "react-spinners/ClipLoader";
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function ForgotEnterEmail(){
     let [form , setForm] = useState({
@@ -10,7 +13,11 @@ function ForgotEnterEmail(){
         email : ''
     })
 
+    let [enabled , setEnabled] = useState(0)
+    let [loading , setLoading] = useState(0)
+
     let {mode , setMode} = useContext(modeContext)
+    let {forgot , setForgot} = useContext(forgotContext)
 
     let navigate = useNavigate()
 
@@ -33,8 +40,59 @@ function ForgotEnterEmail(){
     }
     
     function handleSendOtp(){
-        setMode(6)
+        let reqBody = {
+            email : form.email,
+            type : form.type==0 ? 'student' : 'admin'
+        }
+
+        setForgot({
+            ...forgot,
+            email : form.email,
+            type : reqBody.type
+        })
+
+        setLoading(1)
+        
+        axios.post('https://quickfix-fuql.onrender.com/password/send-otp' , reqBody)
+            .then(function(res){
+                setLoading(0)
+
+                toast.success("Otp sent")
+                setForgot({
+                    ...forgot,
+                    email : form.email,
+                    type : form.type==0 ? 'student' : 'admin'
+                })
+                setMode(6)
+            })
+            .catch(function(err){
+                setLoading(0)
+
+                if (err.response.status == 404)
+                    toast.error("Account with this email not found")
+                else
+                    toast.error("Unexpected error occured")
+            })
     }
+
+    function enableSendBtn(){
+        if ([0,1,'0','1'].includes(form.type) && form.email.endsWith('@iiitm.ac.in'))
+            setEnabled(1)
+        else
+            setEnabled(0)
+    }
+
+    useEffect(function(){
+        if (loading == 0)
+            enableSendBtn()
+    } , [form])
+
+    useEffect(function(){
+        if (loading == 1)
+            setEnabled(0)
+        else
+            enableSendBtn()
+    } , [loading])
     
     return (
         <div className={styles.container}>
@@ -46,7 +104,8 @@ function ForgotEnterEmail(){
             <input value={form.email} onChange={handleChange} className={styles.email} type="text" name="email" id="email" placeholder='Email'/>
 
             <div className={styles.sendLogin}>
-                <button onClick={handleSendOtp} className={styles.send}>Send OTP</button>
+                <button disabled={!enabled} onClick={handleSendOtp} className={styles.send}>
+                    {loading==1? <ClipLoader color='#425FC6' loading={true} size={25}/> : 'Send OTP'} </button>
                 <button onClick={handleLoginBtn} className={styles.login}>Log in</button>
             </div>
         </div>

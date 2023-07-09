@@ -45,3 +45,10 @@
     background: none;
     color: white;
 }
+
+.container .resend:disabled
+{
+    color: rgb(138, 138, 138);
+    cursor: not-allowed;
+}
+

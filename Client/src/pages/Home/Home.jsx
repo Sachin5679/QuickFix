@@ -15,11 +15,17 @@ import ForgotSuccess from './Components/ForgotSuccess'
 
 
 export let modeContext = createContext()
-
+export let forgotContext = createContext()
 
 function Home(props) {
     let [mode, setMode] = useState(props.mode)
-    
+
+    let [forgot , setForgot] = useState({
+        email : '',
+        type : null,
+        token : ''
+    })
+
     useEffect(function(){
         setMode(props.mode)
     }, [props.mode])
@@ -38,12 +44,24 @@ function Home(props) {
         navigate('/')
     }
 
+    useEffect(function(){
+        if(localStorage.getItem('token') != null)
+        {
+            let curTime = new Date()
+            if (curTime >= localStorage.getItem('exp'))
+                localStorage.clear()
+    
+            else
+                navigate('/dashboard')
+        }
+    } , [])
+
     return (
         <modeContext.Provider value={{mode , setMode}}>
             <div className={styles.home}>
                 <Nav>
                     <div className={styles.container}>
-                        <img className={styles.logo} src="logo.png" alt="Logo" onClick={handleLogoBtn}/>
+                        <img className={styles.logo} src="../public/logo.png" alt="Logo" onClick={handleLogoBtn}/>
                         <ul className={styles.btnList}>
                             {[1, 3 , 6 , 5].includes(mode) && <li><button onClick={handleLoginBtn}>Log In</button></li>}
                             {[1, 2 , 4].includes(mode) && <li><button onClick={handleSignupBtn}>Sign Up</button></li>}
@@ -55,10 +73,12 @@ function Home(props) {
                     {mode == 2 && <LoginCenter />}
                     {mode == 3 && <SignupCenter />}
                     {mode == 4 && <VerifyEmail />}
-                    {mode == 5 && <ForgotEnterEmail />}
-                    {mode == 6 && <ForgotEnterOtp />}
-                    {mode == 7 && <ForgotEnterPass />}
-                    {mode == 8 && <ForgotSuccess />}
+                    <forgotContext.Provider value={{forgot , setForgot}}>
+                        {mode == 5 && <ForgotEnterEmail />}
+                        {mode == 6 && <ForgotEnterOtp />}
+                        {mode == 7 && <ForgotEnterPass />}
+                        {mode == 8 && <ForgotSuccess />}
+                    </forgotContext.Provider>
                 </Center>
             </div>
         </modeContext.Provider>

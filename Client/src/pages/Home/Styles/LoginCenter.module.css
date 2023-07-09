@@ -60,7 +60,8 @@
 
 .container .email , .container .pass , .container .loginForgot .login
 {
-    padding: 10px 20px;
+    padding: 0 20px;
+    height: 4.2rem;
     border-radius: 20px;
 }
 /* -------------------------------------------------------------- */
@@ -88,6 +89,19 @@
     align-self: flex-start;
     background: none;
     color: white;
+}
+
+.container .loginForgot .login:disabled
+{
+    background-color: #404040;
+    color: grey;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+.container .loginForgot .login:disabled:active
+{
+    scale: none;
 }
 /* -------------------------------------------------------------- */
 

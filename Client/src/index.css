@@ -12,6 +12,12 @@
 :root
 {
     font-size: 62.5%;
+
+    --toastify-icon-color-info: #425FC6;
+    --toastify-icon-color-success: #19C37D;
+    --toastify-icon-color-warning: var(--toastify-color-warning);
+    --toastify-icon-color-error: #C31919;
+    --toastify-toast-width: 350px;
 }
 
 body

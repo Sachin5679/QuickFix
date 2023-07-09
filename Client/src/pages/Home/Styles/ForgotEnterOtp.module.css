@@ -35,28 +35,16 @@
 
 
 /* -------------------------------OTP----------------------------- */
-.container .otps
+.container .inputStyle
 {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
+    width: 4.5rem !important;
+    height: 4.5rem;
+    border-radius: 1rem;
+    margin-left: 8px;
+    margin-right: 8px;
 
-.container .otps .otp
-{
-    width: 4rem;
-    height: 4rem;
+    font-size: 1.8rem;
     border: none;
-    border-radius: 1.3rem;
-
-    font-size: 1.6rem;
-    text-align: center;
-}
-
-
-.container .otps .otp::-webkit-inner-spin-button
-{
-    -webkit-appearance: none;
 }
 /* -------------------------------------------------------------- */
 
@@ -74,7 +62,8 @@
 .container .submitResend .submit
 {
     font-size: 1.5rem;
-    padding: 10px 20px;
+    padding: 0 20px;
+    height: 4.2rem;
     border-radius: 20px;
     background-color: #19C37D;
 }

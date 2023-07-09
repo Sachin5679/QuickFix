@@ -15,12 +15,12 @@ function Complaints(){
     return (
         <div className={styles.container}>
             <div className={styles.type}>
-                <button onClick={handleType} className={type==0 ? styles.active : ''} name='0'><span name='0'>Common Complaints</span></button>
-                <button onClick={handleType} className={type==1 ? styles.active : ''} name='1'><span name='1'>My Complaints</span></button>
+                <button onClick={handleType} className={type==0 ? styles.active : ''} name='0'><span>Common Complaints</span></button>
+                <button onClick={handleType} className={type==1 ? styles.active : ''} name='1'><span>My Complaints</span></button>
             </div>
 
             <div className={styles.btns}>
-                <button className={styles.new}><img src="new.png" alt="new" />New Complaint</button>
+                <button className={styles.new}><img src="../public/new.png" alt="new" />New Complaint</button>
                 <select className={styles.sort} name="sort">
                     <option value="newest">Newest</option>
                     <option value="Oldest">Oldest</option>
