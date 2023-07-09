@@ -32,6 +32,19 @@
     justify-content: center;
 }
 
+.comp .title
+{
+    text-transform: capitalize;
+    font-weight: 400;
+}
+
+.comp .desc
+{
+    height: 2.3rem;
+    overflow: hidden;
+    font-weight: 300;
+}
+
 .dateName
 {
     /* border: 2px solid blue; */

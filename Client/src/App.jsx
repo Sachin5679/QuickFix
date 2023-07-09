@@ -16,7 +16,7 @@ function App() {
                     <Route path='/signup' element={<Home mode={3}/>} />
                     <Route path='/signup/verify' element={<Home mode={4}/>} />
                     <Route path='/forgot' element={<Home mode={7}/>} />
-                    <Route path='/dashboard' element={<Dashboard />} />
+                    <Route path='/dashboard' element={<Dashboard mode={1}/>} />
                 </Routes>
             </BrowserRouter>
             <ToastContainer
