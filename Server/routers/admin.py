@@ -45,6 +45,17 @@ def getAllAdmins(db:Session = Depends(getdb) , user = Depends(getCurrentUser)):
 # ------------------------------------------------------------------
 
 
+# ----------------------------GET MY DETAILS (ADMIN)-------------------------
+@adminRouter.get("/admin/me" , response_model=schemas.returnAdmin)
+def getMyDetailsAdmin(admin:models.Admin = Depends(getCurrentUser) , db:Session = Depends(getdb)):
+
+    if not isinstance(admin , models.Admin):
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="You are not an admin")
+
+    return admin
+# ------------------------------------------------------------------
+
+
 # ----------------------------GET SPECIFIC ADMIN-------------------------
 @adminRouter.get("/admin/{id}" , response_model=schemas.returnAdmin)
 def getSpecificAdmin(id:int , db:Session = Depends(getdb)):

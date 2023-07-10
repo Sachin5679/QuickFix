@@ -3,9 +3,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column , Integer , String , Boolean , DateTime, CheckConstraint , ForeignKey , PrimaryKeyConstraint
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from pytz import timezone
 
 Base = declarative_base()
 
+def getCurrentTime():
+    return datetime.now(timezone('Asia/Kolkata'))
 
 # ----------------------------ADMIN MODEL-------------------------
 class Admin(Base):
@@ -16,7 +19,7 @@ class Admin(Base):
     email = Column(String , nullable=False , unique=True)
     hostel = Column(String , nullable=False)
     password = Column(String , nullable= False)
-    created = Column(DateTime , default=datetime.now)
+    created = Column(DateTime , default=getCurrentTime)
 
     __table_args__ = (
         CheckConstraint(email.like(r"%iiitm.ac.in") , name="check_email"),
@@ -36,7 +39,7 @@ class Student(Base):
     hostel = Column(String , nullable=False)
     room = Column(String , nullable=False)
     password = Column(String , nullable= False)
-    created = Column(DateTime , default=datetime.now)
+    created = Column(DateTime , default=getCurrentTime)
     complaints = relationship("Complaint" , back_populates="student" , cascade="all, delete")
     
     __table_args__ = (
@@ -69,7 +72,7 @@ class Complaint(Base):
     category = Column(String , nullable=False)
     object = Column(String , nullable=False)
     objectId = Column(String)
-    created = Column(DateTime , default=datetime.now)
+    created = Column(DateTime , default=getCurrentTime)
     studentId = Column(Integer , ForeignKey("students.id" , ondelete="CASCADE"))
     student = relationship("Student" , back_populates="complaints")
     rejectReason = relationship("RejectedComplaint", uselist=False, back_populates="complaint" , cascade="all, delete")
@@ -151,7 +154,7 @@ class StudentToken(Base):
 
     studentId = Column(Integer , ForeignKey("students.id" , ondelete="CASCADE"))
     token = Column(String , nullable=False)
-    created = Column(DateTime , default=datetime.now)
+    created = Column(DateTime , default=getCurrentTime)
 
     __table_args__ = (
         PrimaryKeyConstraint("studentId" , "token"),
@@ -165,7 +168,7 @@ class AdminToken(Base):
 
     adminId = Column(Integer , ForeignKey("admins.id" , ondelete="CASCADE"))
     token = Column(String , nullable=False)
-    created = Column(DateTime , default=datetime.now)
+    created = Column(DateTime , default=getCurrentTime)
 
     __table_args__ = (
         PrimaryKeyConstraint("adminId" , "token"),
@@ -179,7 +182,7 @@ class StudentOTP(Base):
 
     studentEmail = Column(String , ForeignKey("students.email" , ondelete="CASCADE") , primary_key=True)
     otp = Column(String , nullable=False)
-    created = Column(DateTime , default=datetime.now)
+    created = Column(DateTime , default=getCurrentTime)
 # ------------------------------------------------------------------
 
 
@@ -189,5 +192,5 @@ class AdminOTP(Base):
 
     adminEmail = Column(String , ForeignKey("admins.email" , ondelete="CASCADE") , primary_key=True)
     otp = Column(String , nullable=False)
-    created = Column(DateTime , default=datetime.now)
+    created = Column(DateTime , default=getCurrentTime)
 # ------------------------------------------------------------------
