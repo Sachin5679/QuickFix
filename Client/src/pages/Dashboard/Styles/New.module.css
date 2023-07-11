@@ -181,7 +181,8 @@
 {
     border-radius: 2.5rem;
     align-self: center;
-    padding: 1rem 6rem;
+    height: 4rem;
+    width: 18rem;
     font-size: 1.8rem;
 
     background-color: #19C37D;
@@ -191,6 +192,19 @@
 .formContainer .submit:active
 {
     scale: 0.99 0.99;
+}
+
+.formContainer .submit:disabled
+{
+    background-color: #404040;
+    color: grey;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+.formContainer .submit:disabled:active
+{
+    scale: none;
 }
 
 /* -------------------------------------------------------------- */
