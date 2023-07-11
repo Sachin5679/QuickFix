@@ -83,8 +83,10 @@
 .container .box button
 {
     width: 75%;
-    padding: 1rem 2rem;
-    border-radius: 2rem;
+
+    padding: 0 20px;
+    height: 4.2rem;
+    border-radius: 20px;
 
     cursor: pointer;
     border: none;
@@ -104,5 +106,18 @@
 .container .box .logout
 {
     background-color: #C31919;
+}
+
+.container .box .update:disabled
+{
+    background-color: #404040;
+    color: grey;
+    font-weight: 600;
+    cursor: not-allowed;
+}
+
+.container .box .update:disabled:active
+{
+    scale: none;
 }
 

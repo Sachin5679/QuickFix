@@ -86,7 +86,7 @@ function Dashboard(props) {
                 </div>
             </Nav>
 
-            <userContext.Provider value={{user , setUser}}>
+            <userContext.Provider value={{user , setUser , getUserDetails}}>
                 {mode==1 && <Main/>}
                 {mode==2 && <New/>}
                 {mode==3 && <Profile/>}
