@@ -2,12 +2,19 @@ import { useNavigate } from "react-router-dom"
 import Nav from "../../Layouts/Nav"
 import Main from "./Components/Main"
 import styles from "./Dashboard.module.css"
-import { useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { toast } from "react-toastify"
+import axios from "axios"
+import New from "./Components/New"
+import Profile from "./Components/Profile"
+
+export let userContext = createContext()
 
 function Dashboard(props) {
 
     let [mode , setMode] = useState(props.mode)
+
+    let [user , setUser] = useState(null)
 
     useEffect(function(){
         setMode(props.mode)
@@ -20,7 +27,31 @@ function Dashboard(props) {
     }
 
     function handleProfileBtn(){
+        navigate('/profile')
+    }
 
+    function getUserDetails(){
+        let tkn = localStorage.getItem('token')
+        let typ = localStorage.getItem('type')
+
+        if (tkn == null)
+            return
+
+        let headers = {
+            'Authorization' : `Bearer ${tkn}`,
+            'Content-Type' : 'application/json'
+        }
+
+        axios.get(`https://quickfix-fuql.onrender.com/${typ}/me` , {headers})
+            .then(function(res){
+                setUser(res.data)
+            })
+            .catch(function(err){
+                if (err.response.status == 401)
+                    toast.error("Unauthorized")
+                else
+                    toast.error("Unexpected error occured")
+            })
     }
 
     useEffect(function(){
@@ -39,6 +70,9 @@ function Dashboard(props) {
                 toast.error("Session expired")
                 navigate('/')
             }
+
+            else
+                getUserDetails()
         }
     } , [])
 
@@ -47,11 +81,16 @@ function Dashboard(props) {
             <Nav>
                 <div className={styles.container}>
                     <img className={styles.logo} src="../public/logo.png" alt="Logo" onClick={handleLogoBtn} />
-                    <img className={styles.profile} src="../public/profile.png" alt="Profile" onClick={handleProfileBtn}/>
+                    {mode!=3 && <img className={styles.profile} src="../public/profile.png" alt="Profile" onClick={handleProfileBtn}/>}
+
                 </div>
             </Nav>
 
-            {mode==1 && <Main/>}
+            <userContext.Provider value={{user , setUser}}>
+                {mode==1 && <Main/>}
+                {mode==2 && <New/>}
+                {mode==3 && <Profile/>}
+            </userContext.Provider>
         </>
     )
 }

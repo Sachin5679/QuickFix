@@ -1,5 +1,5 @@
 
-import { useEffect, useState  } from 'react'
+import { useContext, useEffect, useState  } from 'react'
 import styles from '../Styles/LoginCenter.module.css'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -57,7 +57,9 @@ function LoginCenter() {
                 let expTime = new Date()
                 expTime.setMinutes(expTime.getMinutes() + Number(res.data.exp))
                 localStorage.setItem('exp', expTime)
+                localStorage.setItem('type', reqBody.type)
 
+                
                 navigate('/dashboard')
             })
             .catch(function (err) {

@@ -1,0 +1,245 @@
+
+
+.container
+{
+    position: absolute;
+    bottom: 20px;
+
+    width: 100%;
+    height: 80vh;
+    min-height: 500px;
+    padding: 0 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container input , .container button , .container select
+{
+    border:  none;
+}
+
+.container h1
+{
+    font-size: 3.3rem;
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+.container .container2
+{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.container .container2 > *
+{
+    background-color: rgba(0 , 0 , 0 , 0.70);
+    border-radius: 4rem;
+    flex-shrink: 0;
+
+    padding: 2rem;
+}
+
+.container .selectionContainer
+{
+    width: 20%;
+    min-width: 250px;
+}
+
+.container .formContainer
+{
+    width: 52%;
+    min-width: 600px;
+}
+
+.container .imgContainer
+{
+    width: 25%;
+}
+
+
+
+/* -------------------------------SELECTION CONTAINER----------------------------- */
+.container .selectionContainer
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+}
+
+.container .selectionContainer > *
+{
+    width: 100%;
+    padding: 0 1rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container .selectionContainer > * > *
+{
+    width: 48%;
+}
+
+.container .selectionContainer label
+{
+    font-size: 2.4rem;
+}
+
+.container .selectionContainer select , .container .selectionContainer input
+{
+    border-radius: 2rem;
+    font-size: 1.6rem;
+    padding: 1rem 0 1rem 1.4rem;
+
+}
+
+.container .selectionContainer select
+{
+    background-color: #425FC6;
+    color: white;
+}
+
+.container .selectionContainer select option
+{
+    background-color: white;
+    color: #425FC6;
+    font-size: 1.8rem;
+}
+
+.container .selectionContainer input
+{
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.container .selectionContainer input::-webkit-inner-spin-button
+{
+    -webkit-appearance: none;
+}
+/* -------------------------------------------------------------- */
+
+
+
+/* -------------------------------FORM CONTAINER----------------------------- */
+
+.formContainer
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: left;
+}
+
+
+.formContainer .title , .formContainer .pass
+{
+    border-radius: 2rem;
+    width: 300px;
+    
+    padding: 1rem 1.8rem;
+    font-size: 1.8rem;
+}
+
+
+.formContainer .desc
+{
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+
+    font-size: 1.6rem;
+}
+
+.formContainer .type
+{
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.formContainer .type h2
+{
+    font-weight: 400;
+}
+
+.formContainer .type > div
+{
+    display: flex;
+    gap: 7px;
+    font-size: 1.8rem;
+}
+
+.formContainer .submit
+{
+    border-radius: 2.5rem;
+    align-self: center;
+    padding: 1rem 6rem;
+    font-size: 1.8rem;
+
+    background-color: #19C37D;
+    cursor: pointer;
+}
+
+.formContainer .submit:active
+{
+    scale: 0.99 0.99;
+}
+
+/* -------------------------------------------------------------- */
+
+
+/* -------------------------------IMAGE CONTAINER----------------------------- */
+
+.imgContainer
+{
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.imgContainer .displayImg
+{
+    background-color: rgba(255, 255, 255, 30%);
+    width: 90%;
+    height: 60%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgContainer .displayImg img
+{
+    width: 60%;
+}
+
+.imgContainer button
+{
+    border-radius: 2.5rem;
+    align-self: center;
+    padding: 1rem 4rem;
+    font-size: 1.8rem;
+    color: white;
+
+    background-color: #425FC6;
+    cursor: pointer;
+}
+
+.imgContainer button:active
+{
+    scale: 0.99 0.99;
+}
+
+/* -------------------------------------------------------------- */

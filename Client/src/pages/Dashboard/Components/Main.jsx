@@ -11,7 +11,7 @@ function Main(){
         carpentry : true,
         electrical : true,
         plumbing : true,
-        bh1 : false,
+        bh1 : true,
         bh2 : false,
         bh3 : false,
         gh : false,
