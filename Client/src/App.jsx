@@ -8,8 +8,8 @@ import { createContext, useState } from 'react';
 export let domainContext = createContext()
 
 function App() {
-    // let domain = "https://quickfix-fuql.onrender.com"
-    let domain = "http://192.168.69.167:8000"
+    let domain = "https://quickfix-fuql.onrender.com"
+    // let domain = "http://192.168.69.167:8000"
     return (
         <domainContext.Provider value={{domain}}>
             <img className='backgroundimg' src="/bg2.png" alt="background" />
