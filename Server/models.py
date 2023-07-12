@@ -77,8 +77,8 @@ class Complaint(Base):
     student = relationship("Student" , back_populates="complaints")
     rejectReason = relationship("RejectedComplaint", uselist=False, back_populates="complaint" , cascade="all, delete")
     whoUpvoted = relationship("Upvotes" , back_populates="complaint" , cascade="all, delete")
-    image = relationship("Image" , uselist=False , back_populates="complaint")
-    
+    image = relationship("Image" , uselist=False , back_populates="complaint", cascade='all, delete')
+  
     __table_args__ = (
         CheckConstraint(category.in_(["electrical" , "carpentry" , "plumbing"]) , name="check_category"),
         CheckConstraint(location.in_(["bh1" , "bh2" , "bh3" , "gh"]) , name="check_location"),
@@ -93,7 +93,7 @@ class Complaint(Base):
             "window",
             "curtain hanger",
             "tubelight",
-            "seconday light",
+            "secondary light",
             "switch board",
             "fan",
             "fan regulator",

@@ -6,8 +6,10 @@ import { forgotContext, modeContext } from '../Home'
 import ClipLoader from "react-spinners/ClipLoader";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { domainContext } from '../../../App';
 
 function ForgotEnterEmail(){
+    let {domain} = useContext(domainContext)
     let [form , setForm] = useState({
         type : 0,
         email : ''
@@ -53,7 +55,7 @@ function ForgotEnterEmail(){
 
         setLoading(1)
         
-        axios.post('https://quickfix-fuql.onrender.com/password/send-otp' , reqBody)
+        axios.post(`${domain}/password/send-otp` , reqBody)
             .then(function(res){
                 setLoading(0)
 

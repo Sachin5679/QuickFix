@@ -1,11 +1,12 @@
 
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import styles from '../Styles/New.module.css'
 import ClipLoader from "react-spinners/ClipLoader";
 import { userContext } from '../Dashboard';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { domainContext } from '../../../App';
 
 function toTitleCase(str) {
     return str.toLowerCase().split(' ').map(function (word) {
@@ -77,12 +78,12 @@ let personalCarpentryObjects = [
 ]
 
 
-
-
 function New(){
-
+    let {domain} = useContext(domainContext)
     let {user , setUser} = useContext(userContext)
     let navigate = useNavigate()
+    let inputref = useRef()
+    let [image , setImage] = useState(null)
 
     let [regControl , setRegControl] = useState({
         cat : 'carpentry',
@@ -149,11 +150,10 @@ function New(){
 
         setLoading(1)
 
-        axios.post(`https://quickfix-fuql.onrender.com/complaint/${regControl.type}` , reqBody , {headers})
+        axios.post(`${domain}/complaint/${regControl.type}` , reqBody , {headers})
             .then(function(res){
-                setLoading(0)
                 toast.success("Complaint Submitted Successfully")
-                navigate('/dashboard')
+                uploadImage(res.data.id)                
             })
             .catch(function(err){
                 setLoading(0)
@@ -168,15 +168,64 @@ function New(){
             })
     }
 
-    useEffect(function(){
+    function uploadImage(id){
+        if (image == null)
+        {
+            setLoading(0)
+            navigate('/dashboard')
+            return
+        }
+
+        let formData = new FormData()
+        formData.append('file' , image)
+
+        let headers = {
+            'Authorization' : `Bearer ${localStorage.getItem('token')}`,
+            "Content-Type": "multipart/form-data"
+        }
+
+        axios.post(`${domain}/image/${id}` , formData , {headers})
+            .then(function(res){
+                setLoading(0)
+                toast.success("Image Uploaded")
+                navigate('/dashboard')
+            })
+            .catch(function(err){
+                setLoading(0)
+                toast.error("Image upload failed")
+            })
+    }
+
+    function handleClickUploadImage(){
+        inputref.current.click()
+    }
+
+    function handleFileChange(e){
+        if(e.target.files[0])
+            setImage(e.target.files[0])
+    }
+
+    function modifyObjectList(){
         if (regControl.type=='common' && regControl.cat=='carpentry')  setObjectList(commonCarpentryObjects)
         else if (regControl.type=='common' && regControl.cat=='electrical')  setObjectList(commonElectricalObjects)
         else if (regControl.type=='common' && regControl.cat=='plumbing')  setObjectList(commonPlumbingObjects)
         else if (regControl.type=='personal' && regControl.cat=='carpentry')  setObjectList(personalCarpentryObjects)
         else if (regControl.type=='personal' && regControl.cat=='electrical')  setObjectList(personalElectrcalObjects)
+    }
 
+    useEffect(function(){
+        modifyObjectList()
     } , [regControl.cat , regControl.type])
 
+    useEffect(function(){
+        if (objectList != null)
+        {
+            setRegControl({
+                ...regControl,
+                obj : objectList[0]
+            })
+        }
+    } , [objectList])
 
     useEffect(function(){
         if (regControl.cat == 'plumbing')
@@ -247,7 +296,7 @@ function New(){
                             :
                             <select onChange={handleChange} name='objId' id="room">
                                 {possibleObjectId.map(function(i){
-                                    return <option value={i}>{i}</option>
+                                    return <option key={i} value={i}>{i}</option>
                                 })}
                             </select>
                             }
@@ -275,10 +324,15 @@ function New(){
                     </div>
 
                     <div className={styles.imgContainer}>
-                        <div className={styles.displayImg}>
+                        <div onClick={handleClickUploadImage} className={styles.displayImg}>
+                            {image==null ? 
                             <img src="/uimg.png" alt="Upload Image" />
+                            :
+                            <img src={URL.createObjectURL(image)} alt="Upload Image" style={{width : '100%' , height : '100%'}} />
+                            }
                         </div>
-                        <button>Upload Image</button>
+                        <input type="file" name="image" onChange={handleFileChange} ref={inputref} style={{display : 'none'}}/>
+                        <button onClick={handleClickUploadImage}>Upload Image</button>
                     </div>
                 </div>
             </>

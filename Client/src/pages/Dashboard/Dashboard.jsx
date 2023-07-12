@@ -2,16 +2,17 @@ import { useNavigate } from "react-router-dom"
 import Nav from "../../Layouts/Nav"
 import Main from "./Components/Main"
 import styles from "./Dashboard.module.css"
-import { createContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { toast } from "react-toastify"
 import axios from "axios"
 import New from "./Components/New"
 import Profile from "./Components/Profile"
+import { domainContext } from "../../App"
 
 export let userContext = createContext()
 
 function Dashboard(props) {
-
+    let {domain} = useContext(domainContext)
     let [mode , setMode] = useState(props.mode)
 
     let [user , setUser] = useState(null)
@@ -42,13 +43,17 @@ function Dashboard(props) {
             'Content-Type' : 'application/json'
         }
 
-        axios.get(`https://quickfix-fuql.onrender.com/${typ}/me` , {headers})
+        axios.get(`${domain}/${typ}/me` , {headers})
             .then(function(res){
                 setUser(res.data)
             })
             .catch(function(err){
                 if (err.response.status == 401)
+                {
                     toast.error("Unauthorized")
+                    localStorage.clear()
+                    navigate('/')
+                }
                 else
                     toast.error("Unexpected error occured")
             })
@@ -80,8 +85,8 @@ function Dashboard(props) {
         <>
             <Nav>
                 <div className={styles.container}>
-                    <img className={styles.logo} src="../public/logo.png" alt="Logo" onClick={handleLogoBtn} />
-                    {mode!=3 && <img className={styles.profile} src="../public/profile.png" alt="Profile" onClick={handleProfileBtn}/>}
+                    <img className={styles.logo} src="/logo.png" alt="Logo" onClick={handleLogoBtn} />
+                    {mode!=3 && <img className={styles.profile} src="/profile.png" alt="Profile" onClick={handleProfileBtn}/>}
 
                 </div>
             </Nav>

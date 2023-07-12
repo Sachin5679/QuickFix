@@ -6,8 +6,10 @@ import ClipLoader from "react-spinners/ClipLoader";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { domainContext } from '../../../App';
 
 function Profile(){
+    let {domain} = useContext(domainContext)
     let userType = localStorage.getItem('type')
     let {user , setUser , getUserDetails} = useContext(userContext)
     let [detail , setDetail] = useState(null)
@@ -56,7 +58,7 @@ function Profile(){
 
         setLoading(1)
 
-        axios.put('https://quickfix-fuql.onrender.com/student/me' , reqBody , {headers})
+        axios.put(`${domain}/student/me` , reqBody , {headers})
             .then(function(res){
                 setLoading(0)
                 getUserDetails()

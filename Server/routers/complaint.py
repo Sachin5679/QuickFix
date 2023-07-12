@@ -1,5 +1,6 @@
 
 from fastapi import APIRouter , status , HTTPException , Depends
+from fastapi.responses import RedirectResponse
 from Server.database import getdb
 from sqlalchemy.orm.session import Session
 from Server.routers.auth import getCurrentUser
@@ -82,7 +83,7 @@ def getSpecificComplaint(id:int , user = Depends(getCurrentUser) , db:Session = 
     complaint = db.query(models.Complaint)
     complaint = complaint.filter(models.Complaint.id == id)
     complaint = complaint.first()
-    
+
     return complaint
 # ------------------------------------------------------------------
 
@@ -108,7 +109,8 @@ def createPersonalComplaint(data:schemas.createPersonalComplaint , student:model
         (models.Complaint.category == data.category) &
         (models.Complaint.object == data.object) &
         (models.Complaint.location == student.hostel) &
-        (models.Complaint.objectId == student.room)
+        (models.Complaint.objectId == student.room) &
+        (models.Complaint.state != 'closed')
     )
     check = check.first()
     if check != None:
@@ -158,7 +160,8 @@ def createCommonComplaint(data:schemas.createCommonComplaint , student:models.St
         (models.Complaint.category == data.category) &
         (models.Complaint.object == data.object) &
         (models.Complaint.location == data.location) &
-        (models.Complaint.objectId == data.objectId)
+        (models.Complaint.objectId == data.objectId) &
+        (models.Complaint.state != 'closed')
     )
     check = check.first()
     if check != None:
@@ -204,6 +207,12 @@ def deleteMyComplaint(id:int , student:models.Student = Depends(getCurrentUser) 
     if complaint.state != "new":
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Complaint is not in new state")
     
+    if complaint.image != None :
+        if utils.deleteImage(complaint.image.publicId):
+            pass
+        else:
+            print("Image deletion failed")
+
     db.delete(complaint)
     db.commit()
 # ------------------------------------------------------------------

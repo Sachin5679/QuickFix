@@ -35,30 +35,6 @@ def markDoneMyComplaint(id:int , student:models.Student = Depends(getCurrentUser
 # ------------------------------------------------------------------
 
 
-# ----------------------------MARK DONE MY COMPLAINT (STUDENT)-------------------------
-@stateRouter.post("/done/{id}" , status_code=status.HTTP_204_NO_CONTENT)
-def markDoneMyComplaint(id:int , student:models.Student = Depends(getCurrentUser) , db:Session = Depends(getdb)):
-    if not isinstance(student , models.Student):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED , detail="Not authorized")
-
-    complaint = db.query(models.Complaint)
-    complaint = complaint.filter(models.Complaint.id == id)
-    complaint = complaint.first()
-
-    if complaint == None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND , detail="Complaint not found")
-
-    if complaint.studentId != student.id:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Not allowed")
-
-    if complaint.state != "accepted":
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN , detail="Complaint is not in accepted state")
-    
-    complaint.state = "done"
-    db.commit()
-# ------------------------------------------------------------------
-
-
 # ----------------------------ACCEPT A COMPLAINT (ADMIN)-------------------------
 @stateRouter.patch("/accept/{id}" , status_code=status.HTTP_204_NO_CONTENT)
 def acceptAComplaint(id:int , admin:models.Admin = Depends(getCurrentUser) , db:Session = Depends(getdb)):

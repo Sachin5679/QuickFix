@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from 'react-toastify';
+import { domainContext } from '../../../App';
 
 
 function SignupCenter(){
+    let {domain} = useContext(domainContext)
     let [user , setUser] = useState({
         name : '',
         email : '',
@@ -42,7 +44,7 @@ function SignupCenter(){
 
         setLoading(1)
 
-        axios.post('https://quickfix-fuql.onrender.com/student' , reqBody)
+        axios.post(`${domain}/student` , reqBody)
             .then(function(res){
                 setLoading(0)
                 navigate(`/signup/verify?email=${user.email}`)

@@ -19,7 +19,7 @@ function Main(){
         accepted : true,
         rejected : true,
         done : true,
-        closed : true,
+        closed : false,
         typ : 'common',
         ord : 'newest'
     })

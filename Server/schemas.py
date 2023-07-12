@@ -95,7 +95,7 @@ class returnAdmin(BaseModel):
 # ----------------------------PERSONAL COMPLAINT SCHEMA-------------------------
 personalElectricalObjects = [
     "tubelight",
-    "seconday light",
+    "secondary light",
     "switch board",
     "fan",
     "fan regulator"

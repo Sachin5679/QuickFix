@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from 'react-toastify';
+import { domainContext } from '../../../App';
 
 function LoginCenter() {
-
+    let {domain} = useContext(domainContext)
     let [user, setUser] = useState({
         type: 0,
         email: '',
@@ -49,7 +50,7 @@ function LoginCenter() {
 
         setLoading(true)
 
-        axios.post("https://quickfix-fuql.onrender.com/login", reqBody)
+        axios.post(`${domain}/login`, reqBody)
             .then(function (res) {
                 setLoading(false)
 

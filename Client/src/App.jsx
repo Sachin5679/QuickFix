@@ -5,10 +5,14 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { createContext, useState } from 'react';
 
+export let domainContext = createContext()
+
 function App() {
+    // let domain = "https://quickfix-fuql.onrender.com"
+    let domain = "http://192.168.69.167:8000"
     return (
-        <>
-            <img className='backgroundimg' src="../public/bg2.png" alt="background" />
+        <domainContext.Provider value={{domain}}>
+            <img className='backgroundimg' src="/bg2.png" alt="background" />
             <BrowserRouter>
                 <Routes>
                     <Route path='/' element={<Home mode={1}/>} />
@@ -33,7 +37,7 @@ function App() {
                 pauseOnHover
                 theme="dark"
             />
-        </>
+        </domainContext.Provider>
     )
 }
 

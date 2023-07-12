@@ -5,9 +5,10 @@ import { forgotContext, modeContext } from '../Home'
 import ClipLoader from "react-spinners/ClipLoader";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { domainContext } from '../../../App';
 
 function ForgotEnterPass(){
-
+    let {domain} = useContext(domainContext)
     let [form , setForm] = useState({
         pass : '',
         cpass : ''
@@ -34,7 +35,7 @@ function ForgotEnterPass(){
 
         setLoading(1)
 
-        axios.post('https://quickfix-fuql.onrender.com/password' , reqBody)
+        axios.post(`${domain}/password` , reqBody)
             .then(function(res){
                 setLoading(0)
 

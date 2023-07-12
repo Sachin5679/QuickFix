@@ -61,7 +61,7 @@ function Home(props) {
             <div className={styles.home}>
                 <Nav>
                     <div className={styles.container}>
-                        <img className={styles.logo} src="../public/logo.png" alt="Logo" onClick={handleLogoBtn}/>
+                        <img className={styles.logo} src="/logo.png" alt="Logo" onClick={handleLogoBtn}/>
                         <ul className={styles.btnList}>
                             {[1, 3 , 6 , 5].includes(mode) && <li><button onClick={handleLoginBtn}>Log In</button></li>}
                             {[1, 2 , 4].includes(mode) && <li><button onClick={handleSignupBtn}>Sign Up</button></li>}

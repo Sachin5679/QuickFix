@@ -6,8 +6,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { BeatLoader } from 'react-spinners'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { domainContext } from '../../../App'
 
 function VerifyEmail(){
+    let {domain} = useContext(domainContext)
     let {mode , setMode} = useContext(modeContext)
     let [loading , setLoading] = useState(0)
 
@@ -33,7 +35,7 @@ function VerifyEmail(){
 
         setLoading(1)
 
-        axios.post("https://quickfix-fuql.onrender.com/verify" , reqBody)
+        axios.post(`${domain}/verify` , reqBody)
             .then(function(res){
                 setLoading(0)
                 toast.success("Verification mail sent")

@@ -9,14 +9,18 @@ import { toast } from 'react-toastify'
 import ClipLoader from "react-spinners/ClipLoader";
 import { userContext } from '../Dashboard'
 import { useNavigate } from 'react-router-dom'
+import { domainContext } from '../../../App'
 
 function Complaints(){
+    let {domain} = useContext(domainContext)
     let {compControl , setCompControl} = useContext(compContext)
     let [allComplaints , setAllComplaints] = useState([])
     let [finalComplaints , setFinalComplaints] = useState([])
     let [loading , setLoading] = useState(0)
     let userType = localStorage.getItem('type')
     let [popup , setPopup] = useState(null)
+    let [rejectPopup , setRejectPopup] = useState(null)
+    let [popupLoading , setPopupLoading] = useState(0)
 
     let navigate = useNavigate()
 
@@ -57,7 +61,7 @@ function Complaints(){
             'Content-Type' : 'application/json'
         }
 
-        axios.get(`https://quickfix-fuql.onrender.com/complaint/${compControl.typ}` , {headers})
+        axios.get(`${domain}/complaint/${compControl.typ}` , {headers})
             .then(function(res){
                 setLoading(0)
 
@@ -99,7 +103,7 @@ function Complaints(){
                 temp.push(i)
         }
 
-        if (compControl.ord == 'newest')
+        if (compControl.ord == 'oldest')
         {
             temp.sort(function(a , b){
                 return new Date(a.created) - new Date(b.created)
@@ -116,6 +120,127 @@ function Complaints(){
         setFinalComplaints(temp)
     }
 
+    function handleDeleteBtn(){
+        setPopupLoading(1)
+
+        let headers = {
+            'Authorization' : `Bearer ${localStorage.getItem('token')}`,
+            'Content-Type' : 'application/json'
+        }
+
+        axios.delete(`${domain}/complaint/${popup.id}` , {headers})
+            .then(function(res){
+                setPopupLoading(0)
+                toast.success("Complaint Deleted")
+                setPopup(null)
+                getAllComplaints()
+            })
+            .catch(function(err){
+                setPopupLoading(0)
+                toast.error("Could not delete")
+            })
+    }
+
+    function handleDoneBtn(){
+        setPopupLoading(1)
+
+        let headers = {
+            'Authorization' : `Bearer ${localStorage.getItem('token')}`
+        }
+
+        axios.patch(`${domain}/done/${popup.id}` , {} ,  {headers})
+            .then(function(res){
+                setPopupLoading(0)
+                toast.success("Complaint marked done")
+                setPopup(null)
+                getAllComplaints()
+            })
+            .catch(function(err){
+                setPopupLoading(0)
+                toast.error("Could not mark done")
+            })
+    }
+
+    function handleAcceptBtn(){
+        setPopupLoading(1)
+
+        let headers = {
+            'Authorization' : `Bearer ${localStorage.getItem('token')}`
+        }
+
+        axios.patch(`${domain}/accept/${popup.id}` , {} ,  {headers})
+            .then(function(res){
+                setPopupLoading(0)
+                toast.success("Complaint accepted")
+                setPopup(null)
+                getAllComplaints()
+            })
+            .catch(function(err){
+                setPopupLoading(0)
+                toast.error("Could not accept complaint")
+            })
+    }
+
+    function handleCloseBtn(){
+        setPopupLoading(1)
+
+        let headers = {
+            'Authorization' : `Bearer ${localStorage.getItem('token')}`
+        }
+
+        axios.patch(`${domain}/close/${popup.id}` , {} ,  {headers})
+            .then(function(res){
+                setPopupLoading(0)
+                toast.success("Complaint closed")
+                setPopup(null)
+                getAllComplaints()
+            })
+            .catch(function(err){
+                setPopupLoading(0)
+                toast.error("Could not close complaint")
+            })
+    }
+
+    function handleCloseRpopup(){
+        setRejectPopup(null)
+    }
+
+    function handleRpopupChange(e){
+        setRejectPopup({
+            reason : e.target.value
+        })
+    }
+
+    function handleRejectBtn(){
+        setRejectPopup({
+            reason : ''
+        })
+    }
+
+    function handleReject(){
+        setPopupLoading(1)
+
+        let reqBody = {
+            reason : rejectPopup.reason
+        }
+
+        let headers = {
+            'Authorization' : `Bearer ${localStorage.getItem('token')}`
+        }
+
+        axios.patch(`${domain}/reject/${popup.id}` , reqBody ,  {headers})
+            .then(function(res){
+                setPopupLoading(0)
+                setRejectPopup(null)
+                toast.success("Complaint rejected")
+                setPopup(null)
+                getAllComplaints()
+            })
+            .catch(function(err){
+                setPopupLoading(0)
+                toast.error("Could not reject complaint")
+            })
+    }
 
     useEffect(function(){
         getAllComplaints()
@@ -136,14 +261,14 @@ function Complaints(){
     return (
         <div className={styles.container}>
             <div className={styles.type}>
-                <button onClick={handleType} className={compControl.typ=='common' ? styles.active : ''} name='common'><span>Common Complaints</span></button>
-                {userType=='student' && <button onClick={handleType} className={compControl.typ=='my' ? styles.active : ''} name='my'><span>My Complaints</span></button>}
-                {userType=='admin' && <button onClick={handleType} className={compControl.typ=='personal' ? styles.active : ''} name='personal'><span>Individual Complaints</span></button>}
+                <button disabled={loading==1} onClick={handleType} className={compControl.typ=='common' ? styles.active : ''} name='common'><span>Common Complaints</span></button>
+                {userType=='student' && <button disabled={loading==1} onClick={handleType} className={compControl.typ=='my' ? styles.active : ''} name='my'><span>My Complaints</span></button>}
+                {userType=='admin' && <button disabled={loading==1} onClick={handleType} className={compControl.typ=='personal' ? styles.active : ''} name='personal'><span>Individual Complaints</span></button>}
                 
             </div>
 
             <div className={styles.btns}>
-                {userType=='student' && <button onClick={handleNewBtn} className={styles.new}><img src="../public/new.png" alt="new" />New Complaint</button>}
+                {userType=='student' && <button onClick={handleNewBtn} className={styles.new}><img src="/new.png" alt="new" />New Complaint</button>}
                 {userType=='admin' && <span></span>}
                 <select onChange={handleOrder} value={compControl.ord} className={styles.sort} name="sort">
                     <option value="newest">Newest</option>
@@ -219,8 +344,22 @@ function Complaints(){
                         </div>
 
                         <div className={styles.btns}>
-                            {/* {Put buttons here} */}
+                            {userType=='student' && popup.state=='New' && <button onClick={handleDeleteBtn} disabled={popupLoading==1} className={styles.delete}><img src="/delete.png" alt="Delete" />Delete</button>}
+                            {userType=='student' && popup.state=='Accepted' && <button onClick={handleDoneBtn} disabled={popupLoading==1} className={styles.done}><img src="/done.png" alt="Done" />Done</button>}
+                            {userType=='admin' && popup.state=='New' && <button onClick={handleRejectBtn} disabled={popupLoading==1} className={styles.reject}><img src="/reject.png" alt="Reject" />Reject</button>}
+                            {userType=='admin' && popup.state=='New' && <button onClick={handleAcceptBtn} disabled={popupLoading==1} className={styles.accept}><img src="/accept.png" alt="Accept" />Accept</button>}
+                            {userType=='admin' && popup.state=='Done' && <button onClick={handleCloseBtn} disabled={popupLoading==1} className={styles.close}><img src="/done.png" alt="Close" />Close</button>}
                         </div>
+                        
+                        {rejectPopup != null && 
+                            <div className={styles.rejectPopup}>
+                                <div onClick={handleCloseRpopup} className={styles.background2}></div>
+                                <div className={styles.box}>
+                                    <textarea onChange={handleRpopupChange} value={rejectPopup.reason} placeholder='Reason'></textarea>
+                                    <button onClick={handleReject} disabled={popupLoading==1} className={styles.reject2}><img src="/reject.png" alt="Reject" />Reject</button>
+                                </div>
+                            </div>
+                        }
                     </div>
                     <div className={styles.photo}>
                         {popup.imgLink == null && 

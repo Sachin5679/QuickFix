@@ -39,6 +39,7 @@ function Comp(props) {
 
     function handleClick() {
         let popupData = {
+            id : data.id,
             created: dateStr,
             title: toTitleCase(data.title),
             name : toTitleCase(data.student.name),
@@ -61,8 +62,8 @@ function Comp(props) {
             <div onClick={handleClick} className={styles.comp}>
                 <div style={{ backgroundColor: color }} className={styles.state}></div>
                 <div className={styles.titleDesc}>
-                    <h1 className={styles.title}>{data.title}</h1>
-                    <p className={styles.desc}>{data.description}</p>
+                    <h1 className={styles.title}>{toTitleCase(data.title)}</h1>
+                    <p className={styles.desc}>{capitalizeFirstLetter(data.description)}</p>
                 </div>
                 <div className={styles.dateName}>
                     <p className={styles.date}>{dateStr}</p>

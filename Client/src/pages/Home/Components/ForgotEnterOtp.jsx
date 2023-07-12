@@ -7,8 +7,10 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import ClipLoader from "react-spinners/ClipLoader";
 import { useNavigate } from 'react-router-dom'
+import { domainContext } from '../../../App'
 
 function ForgotEnterOtp(){
+    let {domain} = useContext(domainContext)
     let [finalOtp , setFinalOtp] = useState('')
     let {mode , setMode} = useContext(modeContext)
     let {forgot , setForgot} =  useContext(forgotContext)
@@ -34,7 +36,7 @@ function ForgotEnterOtp(){
 
         setLoading(1)
 
-        axios.post('https://quickfix-fuql.onrender.com/password/verify-otp' , reqBody)
+        axios.post(`${domain}/password/verify-otp` , reqBody)
             .then(function(res){
                 setLoading(0)
 
