@@ -110,7 +110,8 @@ def createPersonalComplaint(data:schemas.createPersonalComplaint , student:model
         (models.Complaint.object == data.object) &
         (models.Complaint.location == student.hostel) &
         (models.Complaint.objectId == student.room) &
-        (models.Complaint.state != 'closed')
+        (models.Complaint.state != 'closed') &
+        (models.Complaint.state != 'rejected')
     )
     check = check.first()
     if check != None:
@@ -161,7 +162,8 @@ def createCommonComplaint(data:schemas.createCommonComplaint , student:models.St
         (models.Complaint.object == data.object) &
         (models.Complaint.location == data.location) &
         (models.Complaint.objectId == data.objectId) &
-        (models.Complaint.state != 'closed')
+        (models.Complaint.state != 'closed') &
+        (models.Complaint.state != 'rejected')
     )
     check = check.first()
     if check != None:

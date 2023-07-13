@@ -137,28 +137,28 @@
     flex-direction: column;
     gap: 20px;
     
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 
     /* -------------------------------SCROLLBAR----------------------------- */
-    .compContainer::-webkit-scrollbar
+    *::-webkit-scrollbar       /*compContainer*/
     {
         width: 0.8rem;
     }
 
-    .compContainer::-webkit-scrollbar-thumb
+    *::-webkit-scrollbar-thumb
     {
         background-color: #425FC6;
         border-radius: 2rem;
     }
 
-    .compContainer::-webkit-scrollbar-thumb:hover
+    *::-webkit-scrollbar-thumb:hover
     {
         background-color: #3a53af;
     }
 
-    .compContainer::-webkit-scrollbar-thumb:active
+    *::-webkit-scrollbar-thumb:active
     {
         background-color: #2f438d;
     }
@@ -419,4 +419,116 @@
     object-position: center;
 }
 /* -------------------------------------------------------------- */
+/* -------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------RESPONSIVENESS----------------------------- */
+
+@media screen and (max-width:1000px)
+{
+    .pContainer .popup
+    {
+        width: 100vw;
+        min-width: 0;
+    }
+
+    .pContainer .photo
+    {
+        width: 50%;
+    }
+
+    .pContainer .details
+    {
+        width: 48%;
+    }
+}
+
+
+@media screen and (max-width:750px)
+{
+    .container
+    {
+        width: 95%;
+    }
+}
+
+
+@media screen and (max-width:600px)
+{
+    .pContainer .popup
+    {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50% , -50%);
+
+        width: 100vw;
+        height: 80vh;
+        background-color: #E1DBD1;
+
+        border-radius: 4rem;
+        padding: 2rem 4rem;
+        padding-right: 2rem;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 40px;
+        color: black;
+
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+
+    .pContainer .popup > *
+    {
+        width: 100%;
+        gap: 20px;
+    }
+
+    .pContainer .popup .photo
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pContainer .popup img
+    {
+        max-width: 450px;
+        align-self: center;
+    }
+}
+
+
 /* -------------------------------------------------------------- */

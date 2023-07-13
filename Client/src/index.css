@@ -44,3 +44,39 @@ body
 
     opacity: 0.25;
 }
+
+
+
+
+/* -------------------------------RESPONSIVENESS----------------------------- */
+@media screen and (max-width:1000px)
+{
+    body
+    {
+        height: auto;
+        width: 100vw;
+        overflow: hidden;
+    }
+}
+
+
+@media screen and (max-width:500px)
+{
+    :root
+    {
+        font-size: 54% !important;
+    }
+}
+
+@media screen and (max-width:400px)
+{
+    :root
+    {
+        font-size: 45% !important;
+    }
+}
+
+
+
+
+/* -------------------------------------------------------------- */

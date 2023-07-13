@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { domainContext } from '../../../App'
 
 function Complaints(){
+    let {user , setUser} = useContext(userContext)
     let {domain} = useContext(domainContext)
     let {compControl , setCompControl} = useContext(compContext)
     let [allComplaints , setAllComplaints] = useState([])
@@ -257,6 +258,18 @@ function Complaints(){
     useEffect(function(){
         filterComplaints()
     } , [allComplaints])
+
+    useEffect(function(){
+        if (user != null)
+        {
+            compControl.bh1 = false
+            compControl.bh2 = false
+            compControl.bh3 = false
+            compControl.gh = false
+            compControl[user.hostel] = true
+            setCompControl(compControl)
+        }
+    } , [user])
 
     return (
         <div className={styles.container}>

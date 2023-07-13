@@ -242,13 +242,23 @@ function New(){
     } , [regControl])
 
     useEffect(function(){
-        if (user != null && regControl.type == 'personal')
+        if (user != null)
         {
-            setRegControl({
-                ...regControl,
-                loc : user.hostel,
-                objId : user.room
-            })
+            if (regControl.type=='personal'){
+                setRegControl({
+                    ...regControl,
+                    loc : user.hostel,
+                    objId : user.room
+                })
+            }
+            else
+            {
+                setRegControl({
+                    ...regControl,
+                    loc : user.hostel,
+                })
+            }
+            
         }
     } , [regControl.type , user])
 
@@ -280,7 +290,7 @@ function New(){
 
                         <div className={styles.group}>
                             <label htmlFor="loc">Location</label>
-                            <select disabled={regControl.type=='personal'} value={regControl.loc} onChange={handleChange}  name="loc" id="loc">
+                            <select disabled={1} value={regControl.loc} onChange={handleChange}  name="loc" id="loc">
                                 <option value="bh1">BH1</option>
                                 <option value="bh2">BH2</option>
                                 <option value="bh3">BH3</option>

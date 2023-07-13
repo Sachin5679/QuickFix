@@ -66,3 +66,38 @@
 {
     scale: 0.98 0.98;
 }
+
+
+
+
+
+
+/* -------------------------------RESPONSIVE----------------------------- */
+@media screen and (max-width:550px)
+{
+    :root
+    {
+        /* font-size: 58% !important; */
+    }
+
+    .container
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container .btnList
+    {
+        position: fixed;
+        bottom: 2rem;
+        left: 0;
+        width: 100%;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+
+/* -------------------------------------------------------------- */

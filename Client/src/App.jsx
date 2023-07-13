@@ -8,8 +8,8 @@ import { createContext, useState } from 'react';
 export let domainContext = createContext()
 
 function App() {
-    let domain = "https://quickfix-fuql.onrender.com"
-    // let domain = "http://192.168.69.167:8000"
+    // let domain = "https://quickfix-fuql.onrender.com"
+    let domain = "http://192.168.69.167:8000"
     return (
         <domainContext.Provider value={{domain}}>
             <img className='backgroundimg' src="/bg2.png" alt="background" />
@@ -19,7 +19,7 @@ function App() {
                     <Route path='/login' element={<Home mode={2}/>} />
                     <Route path='/signup' element={<Home mode={3}/>} />
                     <Route path='/signup/verify' element={<Home mode={4}/>} />
-                    <Route path='/forgot' element={<Home mode={7}/>} />
+                    <Route path='/forgot' element={<Home mode={5}/>} />
                     <Route path='/dashboard' element={<Dashboard mode={1}/>} />
                     <Route path='/new' element={<Dashboard mode={2}/>} />
                     <Route path='/profile' element={<Dashboard mode={3}/>} />

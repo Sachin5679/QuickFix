@@ -26,6 +26,11 @@
     padding: 2rem 4rem;
 }
 
+.btn
+{
+    display: none;
+}
+
 .complaints
 {
     border-radius: 4rem;
@@ -35,3 +40,52 @@
     background-color: rgba(0 , 0 , 0 , 0.70);
     padding: 2rem 4rem;
 }
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------RESPONSIVENESS----------------------------- */
+
+@media screen and (max-width:1200px)
+{
+    .filter
+    {
+        min-width: 161px;
+        padding: 2rem 1rem;
+        flex-shrink: 0;
+    }
+}
+
+
+@media screen and (max-width:1000px)
+{
+    .container
+    {
+        position: fixed;
+        height: 89vh;
+        top: 11vh;
+        width: 100vw;
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .complaints
+    {
+        padding: 2rem 1rem;
+        min-width: auto;
+        flex-grow: 1;
+        overflow-y: auto;
+    }
+}
+/* -------------------------------------------------------------- */
+
+

@@ -43,23 +43,23 @@ function Filter(){
                 <h1>Location</h1>
                 <div className={styles.options}>
                     <div className={styles.option}>
-                        <input onChange={handleChange} checked={compControl.bh1} type="checkbox" name="bh1" id="bh1" />
-                        <label htmlFor="bh1">Boys Hostel 1</label>
+                        <input disabled={compControl.bh1==false} checked={compControl.bh1} type="checkbox" name="bh1" id="bh1" />
+                        <label htmlFor="bh1">BH 1</label>
                     </div>
 
                     <div className={styles.option}>
-                        <input onChange={handleChange} checked={compControl.bh2} type="checkbox" name="bh2" id="bh2" />
-                        <label htmlFor="bh2">Boys Hostel 2</label>
+                        <input disabled={compControl.bh2==false} checked={compControl.bh2} type="checkbox" name="bh2" id="bh2" />
+                        <label htmlFor="bh2">BH 2</label>
                     </div>
 
                     <div className={styles.option}>
-                        <input onChange={handleChange} checked={compControl.bh3} type="checkbox" name="bh3" id="bh3" />
-                        <label htmlFor="bh3">Boys Hostel 3</label>
+                        <input disabled={compControl.bh3==false} checked={compControl.bh3} type="checkbox" name="bh3" id="bh3" />
+                        <label htmlFor="bh3">BH 3</label>
                     </div>
 
                     <div className={styles.option}>
-                        <input onChange={handleChange} checked={compControl.gh} type="checkbox" name="gh" id="gh" />
-                        <label htmlFor="gh">Girls Hostel</label>
+                        <input disabled={compControl.gh==false} checked={compControl.gh} type="checkbox" name="gh" id="gh" />
+                        <label htmlFor="gh">GH</label>
                     </div>
                 </div>
             </div>

@@ -59,3 +59,33 @@
 {
     scale: none;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------RESPONSIVENESS----------------------------- */
+
+@media screen and (max-width:550px)
+{
+    .container
+    {
+        width: 100vw;
+        max-width: 400px;
+        min-width: 300px;
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+}
+/* -------------------------------------------------------------- */

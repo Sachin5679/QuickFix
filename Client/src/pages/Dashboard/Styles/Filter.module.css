@@ -54,3 +54,26 @@
 
 
 
+
+/* -------------------------------RESPONSIVENESS----------------------------- */
+@media screen and (max-width:1000px)
+{
+    .container
+    {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: stretch;
+        gap: 20px;
+
+        top: 150px;
+        bottom: auto;
+        height: auto;
+    }
+
+    .container .options
+    {
+        padding-left: 0 !important;
+    }
+}
+/* -------------------------------------------------------------- */
