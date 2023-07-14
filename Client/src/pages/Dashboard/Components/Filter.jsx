@@ -34,7 +34,7 @@ function Filter(){
 
                     <div className={styles.option}>
                         <input onChange={handleChange} checked={compControl.plumbing} type="checkbox" name="plumbing" id="plumbing" />
-                        <label htmlFor="plumbing">plumbing</label>
+                        <label htmlFor="plumbing">Plumbing</label>
                     </div>
                 </div>
             </div>

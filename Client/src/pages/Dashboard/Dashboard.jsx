@@ -8,6 +8,7 @@ import axios from "axios"
 import New from "./Components/New"
 import Profile from "./Components/Profile"
 import { domainContext } from "../../App"
+import { ClipLoader } from "react-spinners"
 
 export let userContext = createContext()
 
@@ -87,15 +88,21 @@ function Dashboard(props) {
                 <div className={styles.container}>
                     <img className={styles.logo} src="/logo.png" alt="Logo" onClick={handleLogoBtn} />
                     {mode!=3 && <img className={styles.profile} src="/profile.png" alt="Profile" onClick={handleProfileBtn}/>}
-
                 </div>
             </Nav>
 
-            <userContext.Provider value={{user , setUser , getUserDetails}}>
-                {mode==1 && <Main/>}
-                {mode==2 && <New/>}
-                {mode==3 && <Profile/>}
-            </userContext.Provider>
+            {user==null ? 
+                <div className={styles.loading}>
+                    <ClipLoader color='#425FC6' loading={true} size={55} />
+                    <p>Loading user details...</p>
+                </div>
+                :
+                <userContext.Provider value={{user , setUser , getUserDetails}}>
+                    {mode==1 && <Main/>}
+                    {mode==2 && <New/>}
+                    {mode==3 && <Profile/>}
+                </userContext.Provider>
+            }
         </>
     )
 }

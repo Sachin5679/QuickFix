@@ -15,7 +15,11 @@ function toTitleCase(str) {
 }
 
 let commonElectricalObjects = [
-    "water cooler"
+    "water cooler",
+    "geaser",
+    "bathroom tubelight",
+    "bathroom switchboard",
+    "bathroom exhaut fan"
 ]
 
 let commonCarpentryObjects = [
@@ -27,36 +31,35 @@ let commonPlumbingObjects = [
     'flush',
     'tap',
     'urinal',
-    'geaser',
     'shower',
     'basin'
 ]
 
 let possibleObjectId = [
     "GroundFloor",
-    "Floor1",
-    "Floor2",
-    "Floor3",
-    "Toilet1",
-    "Toilet2",
-    "Toilet3",
-    "Toilet4",
-    "Toilet5",
-    "Toilet6",
-    "Toilet7",
-    "Toilet8",
-    "Toilet9",
-    "Toilet10",
-    "Toilet11",
-    "Toilet12",
-    "Toilet13",
-    "Toilet14",
-    "Toilet15",
-    "Toilet16",
-    "Toilet17",
-    "Toilet18",
-    "Toilet19",
-    "Toilet20",
+    "Floor 1",
+    "Floor 2",
+    "Floor 3",
+    "Toilet 1",
+    "Toilet 2",
+    "Toilet 3",
+    "Toilet 4",
+    "Toilet 5",
+    "Toilet 6",
+    "Toilet 7",
+    "Toilet 8",
+    "Toilet 9",
+    "Toilet 10",
+    "Toilet 11",
+    "Toilet 12",
+    "Toilet 13",
+    "Toilet 14",
+    "Toilet 15",
+    "Toilet 16",
+    "Toilet 17",
+    "Toilet 18",
+    "Toilet 19",
+    "Toilet 20",
 ]
 
 let personalElectrcalObjects = [
@@ -153,7 +156,7 @@ function New(){
         axios.post(`${domain}/complaint/${regControl.type}` , reqBody , {headers})
             .then(function(res){
                 toast.success("Complaint Submitted Successfully")
-                uploadImage(res.data.id)                
+                uploadImage(res.data.id)
             })
             .catch(function(err){
                 setLoading(0)
@@ -214,8 +217,11 @@ function New(){
     }
 
     useEffect(function(){
-        modifyObjectList()
-    } , [regControl.cat , regControl.type])
+        if (loading==1)
+            setEnabled(0)
+        else
+            enableSubmitBtn()
+    } , [loading])
 
     useEffect(function(){
         if (objectList != null)
@@ -226,16 +232,6 @@ function New(){
             })
         }
     } , [objectList])
-
-    useEffect(function(){
-        if (regControl.cat == 'plumbing')
-        {
-            setRegControl({
-                ...regControl,
-                cat : 'carpentry'
-            })
-        }
-    } , [regControl.type])
 
     useEffect(function(){
         enableSubmitBtn()
@@ -261,6 +257,28 @@ function New(){
             
         }
     } , [regControl.type , user])
+
+    useEffect(function(){
+        modifyObjectList()
+    } , [regControl.cat , regControl.type])
+
+    useEffect(function(){
+        if (regControl.type == 'personal' && regControl.cat == 'plumbing')
+        {
+            setRegControl({
+                ...regControl,
+                cat : 'carpentry'
+            })
+        }
+
+        if (regControl.type == 'common')
+        {
+            setRegControl({
+                ...regControl,
+                objId : possibleObjectId[0]
+            })
+        }
+    } , [regControl.type])
 
     return (
         <div className={styles.container}>

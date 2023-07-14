@@ -128,12 +128,14 @@ class createPersonalComplaint(BaseModel):
 # ----------------------------COMMON COMPLAINT SCHEMA-------------------------
 commonElectricalObjects = [
     "water cooler",
-    "other"
+    "geaser",
+    "bathroom tubelight",
+    "bathroom switchboard",
+    "bathroom exhaut fan"
 ]
 
 commonCarpentryObjects = [
     "bathroom door",
-    "other"
 ]
 
 commonPlumbingObjects = [
@@ -141,33 +143,35 @@ commonPlumbingObjects = [
     "flush",
     "tap",
     "urinal",
-    "geaser",
     "shower",
     "basin",
-    "other"
 ]
 
 possibleObjectId = [
     "GroundFloor",
-    "Floor1",
-    "Floor2",
-    "Floor3",
-    "Toilet1",
-    "Toilet2",
-    "Toilet3",
-    "Toilet4",
-    "Toilet5",
-    "Toilet6",
-    "Toilet7",
-    "Toilet8",
-    "Toilet9",
-    "Toilet10",
-    "Toilet11",
-    "Toilet12",
-    "Toilet13",
-    "Toilet14",
-    "Toilet15",
-    "Toilet16",
+    "Floor 1",
+    "Floor 2",
+    "Floor 3",
+    "Toilet 1",
+    "Toilet 2",
+    "Toilet 3",
+    "Toilet 4",
+    "Toilet 5",
+    "Toilet 6",
+    "Toilet 7",
+    "Toilet 8",
+    "Toilet 9",
+    "Toilet 10",
+    "Toilet 11",
+    "Toilet 12",
+    "Toilet 13",
+    "Toilet 14",
+    "Toilet 15",
+    "Toilet 16",
+    "Toilet 17",
+    "Toilet 18",
+    "Toilet 19",
+    "Toilet 20",
 ]
 
 

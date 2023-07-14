@@ -1,0 +1,340 @@
+/* -------------------------------POPUP----------------------------- */
+.pContainer .background
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0 , 0 , 0 , 90%);
+    width: 100%;
+    height: 100%;
+}
+
+.pContainer .popup
+{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+
+    width: 1000px;
+    height: 500px;
+    background-color: #E1DBD1;
+
+    border-radius: 4rem;
+    padding: 2rem 4rem;
+    padding-right: 2rem;
+
+    display: flex;
+    justify-content: space-between;
+    color: black;
+}
+
+.pContainer .popup > *
+{
+    /* border: 2px solid red; */
+    width: 50%;
+}
+
+.pContainer .details
+{
+    width: 58%;
+}
+
+.pContainer .photo
+{
+    width: 40%;
+}
+
+
+/* -------------------------------DETAILS----------------------------- */
+.pContainer .popup .details
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.pContainer .popup .details > *
+{
+    /* border: 2px solid blue; */
+}
+
+.pContainer .popup .titleName
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.pContainer .popup .titleName h1
+{
+    font-weight: 500;
+}
+
+.pContainer .popup .titleName ul
+{
+    padding-left: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.pContainer .desc
+{
+    font-size: 1.8rem;
+}
+
+
+
+
+/* -------------------------------MORE DETAILS----------------------------- */
+.pContainer .popup .details .moreDetails
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 1.5rem;
+}
+
+.pContainer .popup .details .moreDetails > *
+{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;  
+}
+
+.pContainer .popup .details .moreDetails > * > *
+{
+    width: 40%;
+
+    font-weight: 500;
+}
+
+
+.pContainer .popup .details .moreDetails h3
+{
+    width: 65%;
+}
+/* -------------------------------------------------------------- */
+
+
+
+/* -------------------------------------------------------------- */
+
+
+
+/* -------------------------------BUTTONS----------------------------- */
+.pContainer .btns
+{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+.pContainer .btns button
+{
+    width: 9rem;
+    height: 3rem;
+    border-radius: 2rem;
+    border: 2px solid black;
+    
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.pContainer .btns button:active , .rejectPopup .box button:active
+{
+    scale: 0.99 0.99;
+}
+
+
+.pContainer .btns button img , .rejectPopup .box button img
+{
+    width: 2rem;
+}
+
+.pContainer .btns button:disabled , .rejectPopup .box button:disabled
+{
+    color: black;
+    cursor: not-allowed;
+    border: 2px solid black;
+}
+
+.pContainer .btns button:disabled:active , .rejectPopup .box button:active
+{
+    scale: none;
+}
+
+
+/* -------------------------------REJECT POPUP----------------------------- */
+.rejectPopup .background2
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: rgba(0 , 0 , 0 , 90%);
+    width: 100%;
+    height: 100%;
+}
+
+.rejectPopup .box
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50% , -50%);
+    
+    width: 400px;
+    height: 200px;
+
+    padding: 2rem 4rem;
+    border-radius: 4rem;
+    background-color: #E1DBD1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.rejectPopup .box textarea
+{
+    flex-basis: 70%;
+    max-width: 100%;
+    min-width: 100%;
+
+    border: none;
+    border-radius: 2rem;
+
+    padding: 2rem;
+    font-size: 1.6rem;
+}
+
+.rejectPopup .box button
+{
+    width: 12rem;
+    height: 3rem;
+    border-radius: 2rem;
+    align-self: center;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+/* -------------------------------------------------------------- */
+
+/* -------------------------------------------------------------- */
+
+
+
+/* -------------------------------Image----------------------------- */
+.pContainer .photo img
+{
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+
+    object-fit: cover;
+    object-position: center;
+}
+/* -------------------------------------------------------------- */
+/* -------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* -------------------------------RESPONSIVENESS----------------------------- */
+
+@media screen and (max-width:1000px)
+{
+    .pContainer .popup
+    {
+        width: 100vw;
+        min-width: 0;
+    }
+
+    .pContainer .photo
+    {
+        width: 50%;
+    }
+
+    .pContainer .details
+    {
+        width: 48%;
+    }
+}
+
+
+
+@media screen and (max-width:600px)
+{
+    .pContainer .popup
+    {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50% , -50%);
+
+        width: 100vw;
+        height: 80vh;
+        background-color: #E1DBD1;
+
+        border-radius: 4rem;
+        padding: 2rem 4rem;
+        padding-right: 2rem;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 40px;
+        color: black;
+
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+
+    .pContainer .popup > *
+    {
+        width: 100%;
+        gap: 20px;
+    }
+
+    .pContainer .popup .photo
+    {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .pContainer .popup img
+    {
+        max-width: 450px;
+        align-self: center;
+    }
+}
+
+
+/* -------------------------------------------------------------- */

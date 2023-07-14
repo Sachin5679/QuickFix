@@ -4,6 +4,7 @@ from sqlalchemy import Column , Integer , String , Boolean , DateTime, CheckCons
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from pytz import timezone
+import Server.schemas as schemas
 
 Base = declarative_base()
 
@@ -84,30 +85,13 @@ class Complaint(Base):
         CheckConstraint(location.in_(["bh1" , "bh2" , "bh3" , "gh"]) , name="check_location"),
         CheckConstraint(state.in_(["new" , "accepted" , "rejected" , "done" , "closed"]) , name="check_state"),
         CheckConstraint(type.in_(["personal" , "common"]) , name="check_type"),
-        CheckConstraint(object.in_([
-            "table",
-            "chair",
-            "bed",
-            "door",
-            "cupboard",
-            "window",
-            "curtain hanger",
-            "tubelight",
-            "secondary light",
-            "switch board",
-            "fan",
-            "fan regulator",
-            "water cooler",
-            "toilet seat",
-            "flush",
-            "tap",
-            "bathroom door",
-            "urinal",
-            "geaser",
-            "shower",
-            "basin",
-            "other"
-        ]) , name="check_object")
+        CheckConstraint(object.in_(
+            schemas.personalCarpentryObjects + 
+            schemas.personalElectricalObjects + 
+            schemas.commonCarpentryObjects +
+            schemas.commonElectricalObjects +
+            schemas.commonPlumbingObjects
+        ) , name="check_object")
     )
 # ------------------------------------------------------------------
 

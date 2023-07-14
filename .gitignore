@@ -3,6 +3,8 @@
 __pycache__/
 /zfaltu
 /run.txt
+alembic.ini
+migrations
 
 
 

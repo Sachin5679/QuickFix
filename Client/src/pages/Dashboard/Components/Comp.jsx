@@ -40,6 +40,7 @@ function Comp(props) {
     function handleClick() {
         let popupData = {
             id : data.id,
+            userId : data.student.id,
             created: dateStr,
             title: toTitleCase(data.title),
             name : toTitleCase(data.student.name),
