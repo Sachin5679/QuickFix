@@ -1,20 +1,22 @@
 
-import { createContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import styles from '../Styles/Main.module.css'
 import Complaints from './Complaints'
 import Filter from './Filter'
+import { userContext } from '../dashboard'
 
 export let compContext = createContext()
 
 function Main(){
+    let {user} = useContext(userContext)
     let [compControl , setCompControl] = useState({
         carpentry : true,
         electrical : true,
         plumbing : true,
-        bh1 : false,
-        bh2 : false,
-        bh3 : false,
-        gh : false,
+        bh1 : user.hostel=='bh1' ? true : false,
+        bh2 : user.hostel=='bh2' ? true : false,
+        bh3 : user.hostel=='bh3' ? true : false,
+        gh : user.hostel=='gh' ? true : false,
         new : true,
         accepted : true,
         rejected : true,

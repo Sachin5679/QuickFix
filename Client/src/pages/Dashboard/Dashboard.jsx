@@ -25,7 +25,7 @@ function Dashboard(props) {
     let navigate = useNavigate()
 
     function handleLogoBtn(){
-        navigate('/')
+        navigate('/dashboard')
     }
 
     function handleProfileBtn(){
@@ -59,7 +59,7 @@ function Dashboard(props) {
                     toast.error("Unexpected error occured")
             })
     }
-
+    
     useEffect(function(){
         if (localStorage.getItem('token') == null)
         {
@@ -77,7 +77,7 @@ function Dashboard(props) {
                 navigate('/')
             }
 
-            else
+            else if (user==null)
                 getUserDetails()
         }
     } , [])

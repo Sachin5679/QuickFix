@@ -2,10 +2,12 @@
 import { useContext, useEffect } from 'react'
 import styles from '../Styles/Filter.module.css'
 import { compContext } from './Main'
+import { userContext } from '../dashboard'
 
 function Filter(){
 
     let {compControl , setCompControl} = useContext(compContext)
+    let {user} = useContext(userContext)
 
     function handleChange(e){
         let {name} = e.target
@@ -43,22 +45,22 @@ function Filter(){
                 <h1>Location</h1>
                 <div className={styles.options}>
                     <div className={styles.option}>
-                        <input disabled={compControl.bh1==false} checked={compControl.bh1} type="checkbox" name="bh1" id="bh1" />
+                        <input disabled={compControl.bh1==false} onChange={()=>null} checked={compControl.bh1} type="checkbox" name="bh1" id="bh1" />
                         <label htmlFor="bh1">BH 1</label>
                     </div>
 
                     <div className={styles.option}>
-                        <input disabled={compControl.bh2==false} checked={compControl.bh2} type="checkbox" name="bh2" id="bh2" />
+                        <input disabled={compControl.bh2==false} onChange={()=>null} checked={compControl.bh2} type="checkbox" name="bh2" id="bh2" />
                         <label htmlFor="bh2">BH 2</label>
                     </div>
 
                     <div className={styles.option}>
-                        <input disabled={compControl.bh3==false} checked={compControl.bh3} type="checkbox" name="bh3" id="bh3" />
+                        <input disabled={compControl.bh3==false} onChange={()=>null} checked={compControl.bh3} type="checkbox" name="bh3" id="bh3" />
                         <label htmlFor="bh3">BH 3</label>
                     </div>
 
                     <div className={styles.option}>
-                        <input disabled={compControl.gh==false} checked={compControl.gh} type="checkbox" name="gh" id="gh" />
+                        <input disabled={compControl.gh==false} onChange={()=>null} checked={compControl.gh} type="checkbox" name="gh" id="gh" />
                         <label htmlFor="gh">GH</label>
                     </div>
                 </div>

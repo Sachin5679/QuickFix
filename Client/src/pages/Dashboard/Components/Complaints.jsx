@@ -134,16 +134,7 @@ function Complaints() {
         filterComplaints()
     }, [allComplaints])
 
-    useEffect(function () {
-        if (user != null) {
-            compControl.bh1 = false
-            compControl.bh2 = false
-            compControl.bh3 = false
-            compControl.gh = false
-            compControl[user.hostel] = true
-            setCompControl(compControl)
-        }
-    }, [user])
+    
 
     return (
         <div className={styles.container}>
