@@ -3,7 +3,10 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     DOMAIN : str
-    DATABASE_URL : str
+    DATABASE_HOST : str
+    DATABASE_DATABASE : str
+    DATABASE_USER : str
+    DATABASE_PASSWORD : str
     SECRET_KEY : str
     ALGORITHM : str
     ACCESS_TOKEN_EXPIRE_MINUTES : int

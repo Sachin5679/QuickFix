@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from Server.config import settings
 
-URL = settings.DATABASE_URL
+URL = f"postgresql://{settings.DATABASE_USER}:{settings.DATABASE_PASSWORD}@{settings.DATABASE_HOST}/{settings.DATABASE_DATABASE}"
 engine = create_engine(URL)
 
 sessionlocal = sessionmaker(autoflush=False , autocommit=False , bind=engine)

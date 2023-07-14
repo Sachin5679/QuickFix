@@ -28,7 +28,6 @@ app.include_router(imageRouter)
 from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
-    "http://localhost:5173",
     "*",
 ]
 
@@ -43,9 +42,9 @@ app.add_middleware(
 
 
 # ----------------------------DATABASE-------------------------
-from Server.database import engine
-import Server.models as models
+# from Server.database import engine
+# import Server.models as models
 
-models.Base.metadata.create_all(engine)
+# models.Base.metadata.create_all(engine)
 # ------------------------------------------------------------------
 
