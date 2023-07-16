@@ -359,7 +359,7 @@ function New(){
                             <img src={URL.createObjectURL(image)} alt="Upload Image" style={{width : '100%' , height : '100%'}} />
                             }
                         </div>
-                        <input type="file" name="image" onChange={handleFileChange} ref={inputref} style={{display : 'none'}}/>
+                        <input type="file" name="image" accept="image/*" onChange={handleFileChange} ref={inputref} style={{display : 'none'}}/>
                         <button onClick={handleClickUploadImage}>Upload Image</button>
                     </div>
                 </div>
