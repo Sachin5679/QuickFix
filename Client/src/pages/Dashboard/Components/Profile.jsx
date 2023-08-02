@@ -102,6 +102,8 @@ function Profile(){
             </div>
             :
             <div className={styles.box}>
+                <div className={styles.name}>{user.name}</div>
+                <div className={styles.email}>{user.email}</div>
                 {userType=='student' &&
                     <>
                         <div className={styles.hostelRoom}>

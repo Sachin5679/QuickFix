@@ -38,6 +38,16 @@
     gap: 20px;
 }
 
+.container .box .name , .container .box .email
+{
+    font-size: 2rem;
+}
+
+.container .box .email
+{
+    text-transform: lowercase;
+}
+
 .container .box .hostelRoom
 {
     width: 100%;
