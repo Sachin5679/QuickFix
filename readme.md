@@ -49,28 +49,28 @@ QuickFix supports five states of complaints
 ![States](Screenshots/0.png)
 ## Process Flow
 
-1. Student Registration
+**1. Student Registration**
 - Students can sign up using their institute email address, name, hostel, room number, and password.
 - A verification email will be sent to the student's institute email for verification.
 
-2. Login Process (Student / Admin)
+**2. Login Process (Student / Admin)**
 - Students and admins can log in using their institute email and password.
 
-3. Complaint Registration by Student
+**3. Complaint Registration by Student**
 - Students can register new complaints, selecting the complaint type (Personal or Common) and category (Carpentry, Plumbing, or Electrical).
 - They can provide a title, description, and optionally, upload a photo related to the complaint.
 
-4. Deletion of Complaint by the Student
+**4. Deletion of Complaint by the Student**
 - Students can delete their registered complaints if needed
 
-5. Examination of Complaint by the Admin
+**5. Examination of Complaint by the Admin**
 - Admins can view common and individual complaints with essential details.
 - They can accept or reject complaints based on their validity.
 
-6. Marking the Complaint Done by the Student
+**6. Marking the Complaint Done by the Student**
 - Students can mark their accepted complaints as "Done" once they believe the issue is resolved.
 
-7. Closing the Complaint by the Admin
+**7. Closing the Complaint by the Admin**
 - Admins can close the complaint after verification and resolution
 ## Screenshots
 - Home
