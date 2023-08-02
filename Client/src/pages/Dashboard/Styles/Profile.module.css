@@ -79,6 +79,13 @@
     font-size: 1.8rem;
 }
 
+.container .box select option:disabled
+{
+    background-color: rgb(163, 163, 163);
+    color: rgb(62, 62, 62);
+}
+
+
 .container .box input
 {
     text-align: center;
