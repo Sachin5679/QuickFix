@@ -102,13 +102,16 @@ function Profile(){
             </div>
             :
             <div className={styles.box}>
+                <div className={styles.name}>{user.name}</div>
+                <div className={styles.email}>{user.email}</div>
                 {userType=='student' &&
                     <>
                         <div className={styles.hostelRoom}>
                             <select value={detail.hostel} onChange={handleChange} name="hostel">
-                                <option value="bh1">BH1</option>
-                                <option value="bh2">BH2</option>
-                                <option value="bh3">BH3</option>
+                                <option value="bh1" disabled={user.hostel=="gh"}>BH1</option>
+                                <option value="bh2" disabled={user.hostel=="gh"}>BH2</option>
+                                <option value="bh3" disabled={user.hostel=="gh"}>BH3</option>
+                                <option value="gh" disabled={user.hostel!="gh"}>GH</option>
                             </select>
                             <input value={detail.room} onChange={handleChange} type="number" name="room" placeholder='Room'/>
                         </div>

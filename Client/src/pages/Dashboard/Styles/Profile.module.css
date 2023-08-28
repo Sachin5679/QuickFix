@@ -38,6 +38,16 @@
     gap: 20px;
 }
 
+.container .box .name , .container .box .email
+{
+    font-size: 2rem;
+}
+
+.container .box .email
+{
+    text-transform: lowercase;
+}
+
 .container .box .hostelRoom
 {
     width: 100%;
@@ -68,6 +78,13 @@
     color: #425FC6;
     font-size: 1.8rem;
 }
+
+.container .box select option:disabled
+{
+    background-color: rgb(163, 163, 163);
+    color: rgb(62, 62, 62);
+}
+
 
 .container .box input
 {
