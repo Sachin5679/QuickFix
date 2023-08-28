@@ -2,7 +2,7 @@
 import { useContext, useEffect, useRef, useState } from 'react'
 import styles from '../Styles/New.module.css'
 import ClipLoader from "react-spinners/ClipLoader";
-import { userContext } from '../Dashboard';
+import { userContext } from '../dashboard.jsx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
@@ -216,6 +216,10 @@ function New(){
         else if (regControl.type=='personal' && regControl.cat=='electrical')  setObjectList(personalElectrcalObjects)
     }
 
+    function handleBack(){
+        navigate("/dashboard")
+    }
+
     useEffect(function(){
         if (loading==1)
             setEnabled(0)
@@ -286,6 +290,7 @@ function New(){
             :
             <>
                 <h1 className={styles.heading}>Register Complaint</h1>
+                <button onClick={handleBack}>Back to complaints</button>
                 <div className={styles.container2}>
                     <div className={styles.selectionContainer}>
                         <div className={styles.group}>
